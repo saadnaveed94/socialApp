@@ -1,0 +1,60 @@
+.mybody {
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.login {
+  width: 100vw;
+  height: 100vh;
+  background-color: #f0f2f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loginWrapper {
+  width: 90%;
+  height: 70%;
+  display: flex;
+}
+.loginLeft{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 4rem;
+}
+.loginRight {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.loginText {
+  font-size: 50px;
+  font-weight: 800;
+  color: #0e27c9ce;
+  margin-bottom: 10px;
+  display: contents;
+}
+.loginDesc {
+  font-size: 24px;
+  margin: inherit;
+}
+
+.loginButton {
+  display: block;
+  margin-left: 9px;
+  /* margin-right: auto; */
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 47px;
+  width: 430px;
+  background-color: #0e27c9ce;
+  color: white;
+  cursor: pointer;
+  border: 0;
+  border-radius: 5px;
+}
