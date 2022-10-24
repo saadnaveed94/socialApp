@@ -1,10 +1,20 @@
 import React from 'react';
+
 import './App.css';
-import Login from './App/Screens/Login/Login';
+import { AdminProvider } from './Contexts/Admin';
+import { BrandProvider } from './Contexts/Brand';
+import { CustomerProvider } from './Contexts/Customer';
+import { Navigation } from './Routes/routes';
 
 function App() {
   return (
-    <Login></Login>
+    <AdminProvider>
+      <BrandProvider>
+        <CustomerProvider>
+          <Navigation />
+        </CustomerProvider>
+      </BrandProvider>
+    </AdminProvider>
   );
 }
 
