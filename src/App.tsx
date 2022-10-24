@@ -1,12 +1,24 @@
 import React from 'react';
+
 import './App.css';
-import Signup from './App/Screens/Signup/Signup';
-function App() { 
+import { AdminProvider } from './Contexts/Admin';
+import { BrandProvider } from './Contexts/Brand';
+import { CustomerProvider } from './Contexts/Customer';
+import { Navigation } from './Routes/routes';
+
+function App() {
   return (
-    <div className="App">
-      <Signup />
-    </div>
+    <>
+      <AdminProvider>
+        <BrandProvider>
+          <CustomerProvider>
+            <Navigation></Navigation>
+          </CustomerProvider>
+        </BrandProvider>
+      </AdminProvider>
+
+    </>
   );
-}  
+}
 
 export default App;
