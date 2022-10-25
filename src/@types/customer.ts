@@ -3,8 +3,8 @@ export type customerDataType = {
   name: string;
   id: string;
   likes: number;
-};
+}[];
 export type customerContextType = {
-  data: customerDataType[];
+  data: customerDataType;
   setCustomerData: Dispatch<any>;
 };
