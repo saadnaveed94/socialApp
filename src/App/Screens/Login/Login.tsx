@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Login.css';
 import { useFormik } from "formik";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import * as yup from "yup";
-//test
+import useLogin from '../../../Hooks/useLogin';
+import { Typography } from '@mui/material';
+import { Link, Navigate, redirect, useParams } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
+
+
 const validationSchema = yup.object({
   email: yup
     .string()
@@ -17,7 +22,15 @@ const validationSchema = yup.object({
     .required('Password is required'),
 });
 
+
 const Login = () => {
+
+  let { userType } = useParams();
+  console.log("usertype in login:", userType);
+  const [loading, setLoading] = useState(false);
+
+
+  const { adminLogin } = useLogin(userType);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -25,9 +38,17 @@ const Login = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      adminLogin(values.email, values.password, setLoading);
+      setLoading(true)
+
     }
+
+
   });
+
+  if (userType !== 'customer' && userType !== 'admin' && userType !== 'brand') {
+    return < Navigate to="/404_Not_Found" />
+  }
 
   return (
 
@@ -48,7 +69,14 @@ const Login = () => {
             <Box sx={{
               "& .MuiTextField-root": { m: 1, width: "50ch" }
             }}>
+
               <form onSubmit={formik.handleSubmit}>
+                {userType === "admin" ? (
+                  <h1 className='loginheading'>Login as admin</h1>
+                ) : userType === "brand" ? (
+                  <h1 className='loginheading'>Login as brand</h1>
+                ) : <h1 className='loginheading'>Login as customer</h1>
+                }
                 <TextField
                   fullWidth
                   id="email"
@@ -71,9 +99,52 @@ const Login = () => {
                   helperText={formik.touched.password && formik.errors.password}
                   onBlur={formik.handleBlur}
                 />
-                <button className='loginButton' type="submit">
-                  Submit
-                </button>
+                {
+                  loading && <Box sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginLeft: '-6rem'
+                  }}><CircularProgress></CircularProgress></Box>
+                }
+
+                <Button variant='contained' className='loginButton' type="submit" sx={{
+                  margin: '8px', color: 'white'
+                }}>
+                  LOGIN
+                </Button>
+                <br></br>
+
+
+                <span id="span">Don't have an account?</span>
+                <br></br>
+                {userType === "admin" ? (
+                  <Link id="span2" to="/admin">
+                    SIGNUP AS ADMIN!
+                  </Link>
+
+                ) : userType === "brand" ? (
+                  <Link id="span2" to="/brand">
+                    SIGNUP AS BRAND!
+                  </Link>
+                ) : <Link id="span2" to="/customer">
+                  SIGNUP AS CUSTOMER!
+                </Link>
+                }
+                <br></br>
+                {userType === "admin" ? (
+                  <Link id="span2" to="/forgotpassword/adminpassword">
+                    Forgot Password?
+                  </Link>
+
+                ) : userType === "brand" ? (
+                  <Link id="span2" to="/forgotpassword/brandpassword">
+                    Forgot Password?
+                  </Link>
+                ) : <Link id="span2" to="/forgotpassword/customerpassword">
+                  Forgot Password?
+                </Link>
+                }
               </form>
             </Box>
 
@@ -87,4 +158,5 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Login;
+
