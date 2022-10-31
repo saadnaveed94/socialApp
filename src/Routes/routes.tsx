@@ -6,21 +6,18 @@ import { Feed } from "../App/Screens/Feed/feed";
 
 
 export const Navigation = () => {
-
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Login />} />
-        <Route path='/signup' element={<Signup />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/:userType" element={<Signup />} />
+        <Route path="/:userType" element={<Signup />} />
+        <Route path="/:userType" element={<Signup />} />
+        <Route path='/404_Not_Found' element={<>Page not found</>} />
         <Route element={<ProtectedRoute />}>
           <Route path='/feed' element={<Feed />} />
         </Route>
-
-
       </Routes>
     </Router>
   );
-
-}
-
-
+};
