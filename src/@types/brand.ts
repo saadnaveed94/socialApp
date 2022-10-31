@@ -4,9 +4,9 @@ export type brandDataType = {
   name: string;
   id: string;
   followers: number;
-};
+}[];
 
 export type brandContextType = {
-  data: brandDataType[];
+  data: brandDataType;
   setBrandData: Dispatch<any>;
 };

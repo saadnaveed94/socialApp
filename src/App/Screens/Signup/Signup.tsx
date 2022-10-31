@@ -28,7 +28,7 @@ const Signup = () => {
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
     },
-  }); 
+  });
 
   return (
     <Box className="signup">
