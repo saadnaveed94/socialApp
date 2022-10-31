@@ -45,6 +45,7 @@ const ResetPage = (props: any) => {
 
 
   })
+  const [open, setOpen] = React.useState(false);
 
   return (
 
@@ -105,7 +106,7 @@ const ResetPage = (props: any) => {
                   Change Password
                 </Button>
                 <br></br>
-                <CustomizedSnackbars>
+                <CustomizedSnackbars  >
 
                 </CustomizedSnackbars>
 

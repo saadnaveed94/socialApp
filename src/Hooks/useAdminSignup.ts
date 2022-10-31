@@ -1,29 +1,58 @@
 import React from "react";
 import axios from "axios";
-import { Params } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
-const useLogin = (userType: any) => {
+const useAdminSignup = (userType: any) => {
   let navigate = useNavigate();
   let url =
-    userType === "brand"
-      ? "https://project2-p2.herokuapp.com/api/brands/login.json"
+    userType === "admin"
+      ? "https://project2-p2.herokuapp.com/api/admins"
+      : userType === "brand"
+      ? "https://project2-p2.herokuapp.com/api/brands"
       : userType === "customer"
-      ? "https://project2-p2.herokuapp.com/api/customers/login.json"
-      : "https://project2-p2.herokuapp.com/api/admins/login.json";
-  console.log(url);
-  const adminLogin = (
+      ? "https://project2-p2.herokuapp.com/api/customers"
+      : "/404_Not_Found";
+  const adminSignup = (
+    name: string,
     email: string,
     password: string,
+    location: string,
     setLoading: (Params: any) => any
   ) => {
     const token = window.localStorage.getItem("token");
+    if (userType === "admin") {
+      axios
+        .post(url, {
+          admin: {
+            name: name,
+            email: email,
+            password: password,
+          },
+        })
+        .then(function (response: any) {
+          console.log(response.data);
+          window.localStorage.setItem(
+            "token",
+            JSON.stringify(response.data.admin.token)
+          );
+
+          navigate("/feed");
+          setLoading(false);
+        })
+
+        .catch(function (error: string) {
+          console.log(error);
+          setLoading(false);
+        });
+    }
     if (userType === "brand") {
       axios
         .post(url, {
           brand: {
+            name: name,
             email: email,
             password: password,
+            location: location,
           },
         })
         .then(function (response: any) {
@@ -40,32 +69,12 @@ const useLogin = (userType: any) => {
           setLoading(false);
         });
     }
-    if (userType === "admin") {
-      axios
-        .post(url, {
-          admin: {
-            email: email,
-            password: password,
-          },
-        })
-        .then(function (response: any) {
-          console.log(response.data);
-          window.localStorage.setItem(
-            "token",
-            JSON.stringify(response.data.admin.token)
-          );
-          navigate("/feed");
-          setLoading(false);
-        })
-        .catch(function (error: string) {
-          console.log(error);
-          setLoading(false);
-        });
-    }
+
     if (userType === "customer") {
       axios
         .post(url, {
           customer: {
+            name: name,
             email: email,
             password: password,
           },
@@ -85,9 +94,9 @@ const useLogin = (userType: any) => {
         });
     }
   };
+
   return {
-    adminLogin: adminLogin,
+    adminSignup,
   };
 };
-
-export default useLogin;
+export default useAdminSignup;
