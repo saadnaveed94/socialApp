@@ -21,7 +21,6 @@ const validationSchema = yup.object({
     .string()
     .min(6, "Password should be of minimum 6 characters length")
     .required("Password is required"),
-  // location: yup.string().required("Location is required"),
 });
 
 const Signup = (props: any) => {
