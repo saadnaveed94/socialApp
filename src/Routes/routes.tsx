@@ -2,6 +2,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ProtectedRoute } from "./protectedRoute";
 import Signup from "../App/Screens/Signup/Signup";
 import Login from "../App/Screens/Login/Login";
+import { Feed } from "../App/Screens/Feed/feed";
+
+
 export const Navigation = () => {
   return (
     <Router>
@@ -11,6 +14,9 @@ export const Navigation = () => {
         <Route path="/:userType" element={<Signup />} />
         <Route path="/:userType" element={<Signup />} />
         <Route path='/404_Not_Found' element={<>Page not found</>} />
+        <Route element={<ProtectedRoute />}>
+          <Route path='/feed' element={<Feed />} />
+        </Route>
       </Routes>
     </Router>
   );
