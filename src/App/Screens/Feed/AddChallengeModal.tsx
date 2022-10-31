@@ -84,6 +84,7 @@ export default function AddChallengeModal(props: any) {
 
   const { postChallenge } = usePostChallenge();
   const handleClickModal = () => {
+    console.log("Image before hook", challengeImage);
     postChallenge(
       challengeName,
       challengeDescription,
