@@ -58,3 +58,20 @@
   border: 0;
   border-radius: 5px;
 }
+#span {
+  margin-left: 8.5rem;
+  margin-top: 3rem !important;
+}
+#span2 {
+  margin-left: 12.5rem;
+  margin-top: 3rem !important;
+  color: #0e27c9ce;
+  margin: 136px;
+}
+.loginheading{
+  font-size:  33px;
+  font-weight: 800;
+  color: #0e27c9ce;
+  text-align: center;
+  margin-right: 7rem;
+}

@@ -20,7 +20,7 @@ import AddIcon from "@mui/icons-material/Add";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ShareIcon from "@mui/icons-material/Share";
-import PrimarySearchAppBar from "../../../Components/Appbar";
+import PrimarySearchAppBar from "../../../components/Appbar";
 import AddChallengeModal from "./AddChallengeModal";
 
 export const Feed = () => {
