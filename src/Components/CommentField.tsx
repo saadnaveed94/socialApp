@@ -1,64 +1,52 @@
-import * as React from "react";
-import InputUnstyled from "@mui/base/InputUnstyled";
-import { styled } from "@mui/system";
+import React from "react";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import axios from "axios";
+import { useEffect } from "react";
+import useComments from "../Hooks/useShowComments";
+import { adminContext } from "../Contexts/Admin";
+import Box from "@mui/material/Box";
 
-const blue = {
-  100: "#DAECFF",
-  200: "#b6daff",
-  400: "#3399FF",
-  500: "#007FFF",
-  600: "#0072E5",
-};
+const CommentField = () => {
+  const { GetComments } = useComments();
+  const { comments } = React.useContext(adminContext);
+  useEffect(() => {
+    GetComments("33");
+  }, []);
 
-const grey = {
-  50: "#f6f8fa",
-  100: "#eaeef2",
-  200: "#d0d7de",
-  300: "#afb8c1",
-  400: "#8c959f",
-  500: "#6e7781",
-  600: "#57606a",
-  700: "#424a53",
-  800: "#32383f",
-  900: "#24292f",
-};
-
-const StyledInputElement = styled("input")(
-  ({ theme }) => `
-  width: 320px;
-  font-family: IBM Plex Sans, sans-serif;
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.5;
-  padding: 12px;
-  border-radius: 0px;
-  color: '#24292f';
-  
-  border: 1px solid #24292f;
-  box-shadow: 0px 4px 30px ${
-    theme.palette.mode === "dark" ? grey[900] : grey[200]
-  };
-
-  &:hover {
-    border-color: '#24292f';
-  }
-
-  &:focus {
-    border-color: '#24292f';
-    outline: 0px solid ${"#24292f"};
-  }
-`
-);
-
-const CustomInput = React.forwardRef(function CustomInput(
-  props: React.InputHTMLAttributes<HTMLInputElement>,
-  ref: React.ForwardedRef<HTMLDivElement>
-) {
   return (
-    <InputUnstyled slots={{ input: StyledInputElement }} {...props} ref={ref} />
+    <div>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography>Show comments</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          {comments.map((value: any) => {
+            return (
+              <Box
+                sx={{
+                  lineHeight: "3rem",
+                  borderBottom: "1px solid rgb(230 230 230 / 87%);",
+                  paddingLeft: "20px",
+                  marginBottom: "20px",
+                  fontSize: "14px",
+                }}
+              >
+                {value.description}
+              </Box>
+            );
+          })}
+        </AccordionDetails>
+      </Accordion>
+    </div>
   );
-});
+};
 
-export default function UnstyledInputIntroduction() {
-  return <CustomInput aria-label="Demo input" placeholder="Type something…" />;
-}
+export default CommentField;

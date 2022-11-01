@@ -16,16 +16,23 @@ import {
 import Textarea from "@mui/joy/Textarea";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddIcon from "@mui/icons-material/Add";
-
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ShareIcon from "@mui/icons-material/Share";
-import PrimarySearchAppBar from "../../../components/Appbar";
+import PrimarySearchAppBar from "../../../Components/Appbar";
 import AddChallengeModal from "./AddChallengeModal";
+import CommentField from "../../../Components/CommentField";
+import useAddComments from "../../../Hooks/useAddComments";
+import { useState } from "react";
 
 export const Feed = () => {
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const { PostComments } = useAddComments();
+  const [newComment, setNewComment] = useState("");
 
+  const handleAddComments = () => {
+    PostComments("33", newComment);
+  };
   return (
     <>
       <AddChallengeModal
@@ -102,10 +109,19 @@ export const Feed = () => {
                 }}
                 placeholder="Add a comment…"
                 defaultValue=""
+                onChange={(e)=>{setNewComment(e.target.value)}}
                 maxRows={4}
               />
-              <Button sx={{ textTransform: "none" }}>Post</Button>
+              
+              <Button
+                sx={{ textTransform: "none" }}
+                onClick={handleAddComments}
+              >
+                Post
+              </Button>
             </Box>
+
+            <CommentField />
           </Card>
         </Container>
       </Box>

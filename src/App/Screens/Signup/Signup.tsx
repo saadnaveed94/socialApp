@@ -29,7 +29,7 @@ const Signup = (props: any) => {
   const { adminSignup } = useAdminSignup(userType);
   const formik = useFormik({
     initialValues: {
-      name: "",
+      name: "", 
       email: "",
       password: "",
       location: "",
@@ -44,7 +44,7 @@ const Signup = (props: any) => {
         setLoading
       );
       setLoading(true);
-    },
+    }, 
   });
 
   if (userType !== "customer" && userType !== "admin" && userType !== "brand") {

@@ -17,7 +17,7 @@ export const Navigation = () => {
         <Route path="/" element={<Navigate to="/login/customer" />} />
         <Route path="/:userType" element={<Signup />} />
         <Route path="/:userType" element={<Signup />} />
-        <Route path="/:userType" element={<Signup />} />
+        <Route path="/:userType" element={<Signup />} /> 
         <Route path="/reset" element={<ResetPage />} />
         <Route path='/login/:userType' element={<Login />} />
         <Route path='/forgotpassword/:pwdType' element={<ForgotPassword />} />

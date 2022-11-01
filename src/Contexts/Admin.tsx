@@ -3,13 +3,14 @@ import * as React from 'react';
 import { adminContextType, adminDataType } from "../@types/admin";
 
 
-const adminContext = createContext<adminContextType | null>(null);
+export const adminContext = createContext<any>(null);
 
 export const AdminProvider = ({ children }: any) => {
   const [adminData, setAdminData] = React.useState<adminDataType>([]);
+  const [comments, setComments] = React.useState<adminDataType>([]);
   return (
     <adminContext.Provider
-      value={{ data: adminData, setAdminData }}
+      value={{ data: adminData, setAdminData, comments, setComments }}
     >
       {children}
     </adminContext.Provider>

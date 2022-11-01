@@ -8,7 +8,7 @@ import * as yup from "yup";
 import { Navigate, redirect, useParams } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import useForget from '../../../Hooks/useForget';
-import CustomizedSnackbars from '../../../components/Toast';
+import CustomizedSnackbars from '../../../Components/Toast';
 
 const validationSchema = yup.object({
   password: yup

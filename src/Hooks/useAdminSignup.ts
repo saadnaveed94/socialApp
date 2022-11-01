@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
 
-const useAdminSignup = (userType: any) => {
+const useAdminSignup = (userType: any) => { 
   let navigate = useNavigate();
   let url =
     userType === "admin"
@@ -28,7 +28,7 @@ const useAdminSignup = (userType: any) => {
             email: email,
             password: password,
           },
-        })
+        }) 
         .then(function (response: any) {
           console.log(response.data);
           window.localStorage.setItem(
