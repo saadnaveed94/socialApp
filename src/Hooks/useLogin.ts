@@ -17,7 +17,6 @@ const useLogin = (userType: any) => {
     password: string,
     setLoading: (Params: any) => any
   ) => {
-    const token = window.localStorage.getItem("token");
     if (userType === "brand") {
       axios
         .post(url, {
@@ -32,7 +31,8 @@ const useLogin = (userType: any) => {
             "token",
             JSON.stringify(response.data.brand.token)
           );
-          navigate("/feed");
+
+          navigate("/feed/brand");
           setLoading(false);
         })
         .catch(function (error: string) {
@@ -54,7 +54,7 @@ const useLogin = (userType: any) => {
             "token",
             JSON.stringify(response.data.admin.token)
           );
-          navigate("/feed");
+          navigate("/feed/admin");
           setLoading(false);
         })
         .catch(function (error: string) {
@@ -76,7 +76,7 @@ const useLogin = (userType: any) => {
             "token",
             JSON.stringify(response.data.customer.token)
           );
-          navigate("/feed");
+          navigate("/feed/customer");
           setLoading(false);
         })
         .catch(function (error: string) {
