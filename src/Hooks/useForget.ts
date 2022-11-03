@@ -2,18 +2,18 @@ import React from "react";
 import axios from "axios";
 import { Params } from "react-router-dom";
 
-const useForget = (pwdType: any) => {
+const useForget = (userType: any) => {
   let url =
-    pwdType === "adminpassword"
+    userType === "admin"
       ? "https://project2-p2.herokuapp.com/api/admins/password"
-      : pwdType === "customerpassword"
+      : userType === "customer"
       ? "https://project2-p2.herokuapp.com/api/customers/password"
       : "https://project2-p2.herokuapp.com/api/brands/password";
   console.log(url);
 
   const Forget = (email: string, setLoading: (Params: any) => any) => {
     const token = window.localStorage.getItem("token");
-    if (pwdType === "brandpassword") {
+    if (userType === "brand") {
       axios
         .post(url, {
           brand: {
@@ -33,7 +33,7 @@ const useForget = (pwdType: any) => {
           setLoading(false);
         });
     }
-    if (pwdType === "adminpassword") {
+    if (userType === "admin") {
       axios
         .post(url, {
           admin: {
@@ -53,7 +53,7 @@ const useForget = (pwdType: any) => {
           setLoading(false);
         });
     }
-    if (pwdType === "customerpassword") {
+    if (userType === "customer") {
       axios
         .post(url, {
           customer: {

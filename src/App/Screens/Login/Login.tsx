@@ -9,6 +9,8 @@ import useLogin from '../../../Hooks/useLogin';
 import { Typography } from '@mui/material';
 import { Link, Navigate, redirect, useParams } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
+import CustomizedSnackbars from '../../../components/Toast';
+
 
 
 const validationSchema = yup.object({
@@ -24,6 +26,7 @@ const validationSchema = yup.object({
 
 
 const Login = () => {
+  const [open, setOpen] = React.useState(false);
 
   let { userType } = useParams();
   console.log("usertype in login:", userType);
@@ -49,6 +52,8 @@ const Login = () => {
   if (userType !== 'customer' && userType !== 'admin' && userType !== 'brand') {
     return < Navigate to="/404_Not_Found" />
   }
+
+
 
   return (
 
@@ -133,18 +138,22 @@ const Login = () => {
                 }
                 <br></br>
                 {userType === "admin" ? (
-                  <Link id="span2" to="/forgotpassword/adminpassword">
+                  <Link id="span2" to='/admin/forgotpassword'>
                     Forgot Password?
                   </Link>
 
                 ) : userType === "brand" ? (
-                  <Link id="span2" to="/forgotpassword/brandpassword">
+                  <Link id="span2" to='/brand/forgotpassword'>
                     Forgot Password?
                   </Link>
-                ) : <Link id="span2" to="/forgotpassword/customerpassword">
+                ) : <Link id="span2" to='/customer/forgotpassword'>
                   Forgot Password?
                 </Link>
                 }
+                <br></br>
+                <CustomizedSnackbars setOpen={open}  >
+
+                </CustomizedSnackbars>
               </form>
             </Box>
 

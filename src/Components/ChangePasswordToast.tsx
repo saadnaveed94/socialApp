@@ -11,7 +11,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 export default function CustomizedSnackbars(props: any) {
   const handleClick = () => {
-    props.setOpen(true);
+    props.setOpenToast(true);
   };
 
   const handleClose = (
@@ -21,15 +21,15 @@ export default function CustomizedSnackbars(props: any) {
     if (reason === "clickaway") {
       return;
     }
-    props.setOpen(false);
+    props.setOpenToast(false);
   };
 
   return (
     <>
 
-      <Snackbar open={props.open} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={props.openToast} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Reset link has been successfully sent to your Email!
+          Your password has been successfully changed!
         </Alert>
       </Snackbar>
     </>

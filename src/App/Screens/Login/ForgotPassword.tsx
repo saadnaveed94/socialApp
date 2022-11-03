@@ -5,9 +5,10 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import * as yup from "yup";
-import { Navigate, redirect, useParams } from 'react-router-dom';
+import { Navigate, redirect, useParams, Link } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import useForget from '../../../Hooks/useForget';
+import CustomizedSnackbars from '../../../components/Toast';
 
 const validationSchema = yup.object({
   email: yup
@@ -17,11 +18,12 @@ const validationSchema = yup.object({
 });
 
 
-const ForgotPassword = () => {
+const ForgotPassword = (props: any) => {
+  const [open, setOpen] = React.useState(false);
 
-  let { pwdType } = useParams();
-  console.log("pwdType in forget password  email", pwdType);
-  const { Forget } = useForget(pwdType);
+  let { userType } = useParams();
+  console.log("userType in forget password  email", userType);
+  const { Forget } = useForget(userType);
   const [loading, setLoading] = useState(false);
 
 
@@ -38,10 +40,13 @@ const ForgotPassword = () => {
 
 
   });
-  if (pwdType !== 'brandpassword' && pwdType !== 'customerpassword' && pwdType !== 'adminpassword') {
+  if (userType !== 'brand' && userType !== 'customer' && userType !== 'admin') {
     return < Navigate to="/404_Not_Found" />
   }
 
+  const handleButtonClick = () => {
+    setOpen(true);
+  }
 
   return (
 
@@ -64,9 +69,9 @@ const ForgotPassword = () => {
             }}>
 
               <form onSubmit={formik.handleSubmit}>
-                {pwdType === "adminpassword" ? (
+                {userType === "admin" ? (
                   <h1 className='loginheading'>Admin Password Change</h1>
-                ) : pwdType === "brandpassword" ? (
+                ) : userType === "brand" ? (
                   <h1 className='loginheading'>Brand Password Change</h1>
                 ) : <h1 className='loginheading'>Customer Password Change</h1>
                 }
@@ -92,11 +97,32 @@ const ForgotPassword = () => {
                 }
 
                 <Button variant='contained' className='loginButton' type="submit" sx={{
-                  margin: '8px', color: 'white'
-                }}>
+                  margin: '8px', color: 'white', backgroundColor: '#0e27c9ce;'
+                }} onClick={handleButtonClick}>
                   Send Reset Link
                 </Button>
+
+                {userType === "admin" ? (
+                  <Link id="span2" to="login/admin">
+                    LOGIN AS ADMIN!
+                  </Link>
+
+                ) : userType === "brand" ? (
+                  <Link id="span2" to="login/brand">
+                    LOGIN AS BRAND!
+                  </Link>
+                ) : <Link id="span2" to="login/customer">
+                  LOGIN AS CUSTOMER!
+                </Link>
+                }
+
+
+                <CustomizedSnackbars
+                  open={open}
+                  setOpen={setOpen}
+                ></CustomizedSnackbars>
                 <br></br>
+
 
 
                 {/* <span id="span">LOGIN</span> */}
