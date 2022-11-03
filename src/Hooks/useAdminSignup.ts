@@ -3,7 +3,7 @@ import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
 
 const useAdminSignup = (userType: any) => { 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   let url =
     userType === "admin"
       ? "https://project2-p2.herokuapp.com/api/admins"
