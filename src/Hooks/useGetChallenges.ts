@@ -2,7 +2,7 @@ import axios from "axios";
 import * as React from "react";
 import { adminContext } from "../Contexts/Admin";
 const useGetChallenges = () => {
-  const { challenges, setChallenges } = React.useContext(adminContext);
+  const { setChallenges } = React.useContext(adminContext);
   const GetChallenges = () => {
     var config = {
       method: "get",

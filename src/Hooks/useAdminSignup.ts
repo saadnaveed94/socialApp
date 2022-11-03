@@ -1,6 +1,5 @@
-import React from "react";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const useAdminSignup = (userType: any) => {
   let navigate = useNavigate();
@@ -19,7 +18,6 @@ const useAdminSignup = (userType: any) => {
     location: string,
     setLoading: (Params: any) => any
   ) => {
-    const token = window.localStorage.getItem("token");
     if (userType === "admin") {
       axios
         .post(url, {
