@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import * as React from "react";
-import { adminContextType, adminDataType } from "../@types/admin";
+import { adminDataType } from "../@types/admin";
 
 // export const adminContext = createContext<adminContextType | null>(null);
 export const adminContext = createContext<any>(null);

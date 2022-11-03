@@ -14,7 +14,11 @@ export const Tricks = () => {
   return (
     <Container sx={styleContainer}>
       <Box>
-        <Typography variant="h5" sx={styleContainer}>
+        <Typography
+          onClick={console.log("clicked")}
+          variant="h5"
+          sx={styleContainer}
+        >
           Challenge Name
         </Typography>
         <ImageList sx={{ width: 500, height: 450 }}>

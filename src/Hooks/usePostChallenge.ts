@@ -11,12 +11,12 @@ const usePostChallenge = () => {
     const data = new FormData();
     data.append("challenge[title]", challengeName);
     data.append("challenge[description]", challengeDescription);
-    data.append("tag[title]", challengeTag);
+    data.append("tag[ids]", challengeTag);
     data.append("challenge[images][]", challengeImage);
 
     var config = {
       method: "post",
-      url: "https://project2-p2.herokuapp.com/api/challenges",
+      url: "http://192.168.99.104:3000/api/challenges",
       headers: {
         Authorization: `Bearer ${token}`,
       },

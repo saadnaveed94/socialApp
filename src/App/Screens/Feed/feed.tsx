@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import {
   Box,
   Card,
@@ -12,26 +12,30 @@ import {
   Typography,
   CardActions,
   Button,
+  Tooltip,
 } from "@mui/material";
 import Textarea from "@mui/joy/Textarea";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import AddIcon from "@mui/icons-material/Add";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ShareIcon from "@mui/icons-material/Share";
+import FlashOnIcon from "@mui/icons-material/FlashOn";
+
 import PrimarySearchAppBar from "../../../components/Appbar";
 import AddChallengeModal from "./AddChallengeModal";
+import AddTrickModal from "./AddTrickModal";
 import useGetChallenges from "../../../Hooks/useGetChallenges";
 import { adminContext } from "../../../Contexts/Admin";
 import moment from "moment/moment";
-import { useParams } from "react-router";
+import useDeleteChallenge from "../../../Hooks/useDeleteChallenge";
 
 export const Feed = () => {
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const [challengeId, setChallengeId] = React.useState<string>("");
+
   const { challenges } = React.useContext(adminContext);
   const { GetChallenges } = useGetChallenges();
   React.useEffect(() => {
     GetChallenges();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   let navigate = useNavigate();
@@ -39,25 +43,21 @@ export const Feed = () => {
   if (userType !== "customer" && userType !== "admin" && userType !== "brand") {
     navigate("/404_Not_Found");
   }
-  console.log("userType in feed:", userType);
+
+  const { DeleteChallenge } = useDeleteChallenge();
+
+  //var item = challenges.find((item) => item._id === props.challengeId);
+
   return (
     <>
-      <AddChallengeModal
-        open={modalOpen}
-        setOpen={setModalOpen}
-      ></AddChallengeModal>
-      <PrimarySearchAppBar
-        add={
-          <Button
-            sx={{ textTransform: "none", color: "inherit" }}
-            onClick={(event: React.MouseEvent<HTMLElement>) => {
-              setModalOpen(true);
-            }}
-          >
-            Challenge +
-          </Button>
-        }
-      ></PrimarySearchAppBar>
+      {userType === "brand" && (
+        <AddChallengeModal
+          open={modalOpen}
+          setOpen={setModalOpen}
+        ></AddChallengeModal>
+      )}
+
+      <PrimarySearchAppBar setModalOpen={setModalOpen}></PrimarySearchAppBar>
 
       <Box
         sx={{
@@ -67,9 +67,12 @@ export const Feed = () => {
         }}
       >
         <Container sx={{ width: "40%", margin: "auto", marginTop: "100px" }}>
-          {challenges.map((value: any) => {
+          {challenges.map((value: any, key: number) => {
             return (
-              <Card sx={{ borderRadius: "12px", mb: 3, minHeight: "500px" }}>
+              <Card
+                key={value.id}
+                sx={{ borderRadius: "12px", mb: 3, minHeight: "500px" }}
+              >
                 <CardHeader
                   avatar={
                     <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
@@ -77,7 +80,12 @@ export const Feed = () => {
                     </Avatar>
                   }
                   action={
-                    <IconButton aria-label="settings">
+                    <IconButton
+                      aria-label="settings"
+                      onClick={() => {
+                        DeleteChallenge(value.id);
+                      }}
+                    >
                       <MoreVertIcon />
                     </IconButton>
                   }
@@ -88,40 +96,62 @@ export const Feed = () => {
                 <CardMedia
                   sx={{ maxHeight: "300px" }}
                   component="img"
-                  // image="https://images.unsplash.com/photo-1550686041-366ad85a1355?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80"
-                  image={value.image}
+                  image={`http://192.168.99.104:3000${value?.images[0]}`}
+
+                  // image={
+                  //   "http://192.168.99.104:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhabUpyY21GNE5IbHlNVzUzZUdKM05XZDFhVFk0Y3pOaU4zYzVhUVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpVjJsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SW1SdmQyNXNiMkZrSUNVeU9ERWxNamt1YW5CbFp5STdJR1pwYkdWdVlXMWxLajFWVkVZdE9DY25aRzkzYm14dllXUWxNakFsTWpneEpUSTVMbXB3WldjR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTExLTAzVDEzOjI3OjAzLjk0OVoiLCJwdXIiOiJibG9iX2tleSJ9fQ==--6807dc99412faaf6ce0dcdd333b64491a5e02f6b/download%20(1).jpeg"
+                  // }
                 />
                 <CardContent>
                   <Typography variant="body2" color="text.secondary">
                     {value.description}
                   </Typography>
                 </CardContent>
-                <CardActions sx={{ justifyContent: "space-evenly" }}>
-                  <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
-                  </IconButton>
-                  <IconButton aria-label="share">
-                    <ShareIcon />
-                  </IconButton>
-                </CardActions>
 
-                <Box sx={{ display: "flex", flexDirection: "row", p: 1 }}>
-                  <Textarea
-                    sx={{
-                      width: "90%",
-                      borderRadius: "0px",
-                      borderColor: "transparent",
-                      p: 1,
-                      "&.JoyTextarea-focused": {
-                        focusedHighlight: "black !important",
-                      },
-                    }}
-                    placeholder="Add a comment…"
-                    defaultValue=""
-                    maxRows={4}
-                  />
-                  <Button sx={{ textTransform: "none" }}>Post</Button>
-                </Box>
+                {userType === "customer" && (
+                  <>
+                    <CardActions sx={{ justifyContent: "space-evenly" }}>
+                      <Tooltip title="Like">
+                        <IconButton aria-label="add to favorites">
+                          <FavoriteIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Add a Trick">
+                        <IconButton
+                          aria-label="add a trick"
+                          onClick={(event: React.MouseEvent<HTMLElement>) => {
+                            setModalOpen(true);
+                            setChallengeId(value.id);
+                          }}
+                        >
+                          <FlashOnIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </CardActions>
+                    <Box sx={{ display: "flex", flexDirection: "row", p: 1 }}>
+                      <Textarea
+                        sx={{
+                          width: "90%",
+                          borderRadius: "0px",
+                          borderColor: "transparent",
+                          p: 1,
+                          "&.JoyTextarea-focused": {
+                            focusedHighlight: "black !important",
+                          },
+                        }}
+                        placeholder="Add a comment…"
+                        defaultValue=""
+                        maxRows={4}
+                      />
+                      <Button sx={{ textTransform: "none" }}>Post</Button>
+                    </Box>
+                    <AddTrickModal
+                      open={modalOpen}
+                      setOpen={setModalOpen}
+                      challengeId={challengeId}
+                    ></AddTrickModal>
+                  </>
+                )}
               </Card>
             );
           })}

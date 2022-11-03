@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./Login.css";
 import { useFormik } from "formik";
 import Box from "@mui/material/Box";
@@ -6,8 +6,8 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import * as yup from "yup";
 import useLogin from "../../../Hooks/useLogin";
-import { Typography } from "@mui/material";
-import { Link, Navigate, redirect, useParams } from "react-router-dom";
+
+import { Link, Navigate, useParams } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const validationSchema = yup.object({

@@ -2,11 +2,11 @@ import axios from "axios";
 import * as React from "react";
 import { adminContext } from "../Contexts/Admin";
 const useGetChallenges = () => {
-  const { challenges, setChallenges } = React.useContext(adminContext);
+  const { setChallenges } = React.useContext(adminContext);
   const GetChallenges = () => {
     var config = {
       method: "get",
-      url: "https://project2-p2.herokuapp.com/api/challenges",
+      url: "http://192.168.99.104:3000/api/challenges",
     };
 
     axios(config)
