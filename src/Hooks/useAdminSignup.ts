@@ -6,11 +6,11 @@ const useAdminSignup = (userType: any) => {
   let navigate = useNavigate();
   let url =
     userType === "admin"
-      ? "https://project2-p2.herokuapp.com/api/admins"
+      ? "http://192.168.99.104:3000/api/admins"
       : userType === "brand"
-      ? "https://project2-p2.herokuapp.com/api/brands"
+      ? "http://192.168.99.104:3000/api/brands"
       : userType === "customer"
-      ? "https://project2-p2.herokuapp.com/api/customers"
+      ? "http://192.168.99.104:3000/api/customers"
       : "/404_Not_Found";
   const adminSignup = (
     name: string,

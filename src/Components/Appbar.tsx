@@ -1,21 +1,24 @@
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
-import Badge from "@mui/material/Badge";
-import MenuItem from "@mui/material/MenuItem";
-import Tooltip from "@mui/material/Tooltip";
-import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
+import {
+  Button,
+  Menu,
+  MenuItem,
+  Badge,
+  InputBase,
+  IconButton,
+  Toolbar,
+  Box,
+  AppBar,
+} from "@mui/material";
+
+import { useNavigate, useParams } from "react-router";
 
 const Search = styled("div")(({ theme }: any) => ({
   position: "relative",
@@ -155,6 +158,8 @@ export default function PrimarySearchAppBar(props: any) {
     </Menu>
   );
 
+  let navigate = useNavigate();
+  let { userType } = useParams();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" sx={{ bgcolor: "#424242" }}>
@@ -168,7 +173,17 @@ export default function PrimarySearchAppBar(props: any) {
           >
             <MenuIcon />
           </IconButton>
-          {props.add}
+          {userType === "brand" && (
+            <Button
+              sx={{ textTransform: "none", color: "inherit" }}
+              onClick={(event: React.MouseEvent<HTMLElement>) => {
+                props.setModalOpen(true);
+              }}
+            >
+              Challenge +
+            </Button>
+          )}
+
           <Search>
             <SearchIconWrapper>
               <SearchIcon />

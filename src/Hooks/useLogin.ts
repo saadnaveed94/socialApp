@@ -7,10 +7,10 @@ const useLogin = (userType: any) => {
   let navigate = useNavigate();
   let url =
     userType === "brand"
-      ? "https://project2-p2.herokuapp.com/api/brands/login.json"
+      ? "http://192.168.99.104:3000/api/brands/login.json"
       : userType === "customer"
-      ? "https://project2-p2.herokuapp.com/api/customers/login.json"
-      : "https://project2-p2.herokuapp.com/api/admins/login.json";
+      ? "http://192.168.99.104:3000/api/customers/login.json"
+      : "http://192.168.99.104:3000/api/admins/login.json";
   console.log(url);
   const adminLogin = (
     email: string,

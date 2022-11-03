@@ -6,7 +6,7 @@ const useGetChallenges = () => {
   const GetChallenges = () => {
     var config = {
       method: "get",
-      url: "https://project2-p2.herokuapp.com/api/challenges",
+      url: "http://192.168.99.104:3000/api/challenges",
     };
 
     axios(config)
