@@ -1,6 +1,4 @@
-import React from "react";
 import axios from "axios";
-import { Params } from "react-router-dom";
 
 const useForget = (pwdType: any) => {
   let url =
@@ -12,7 +10,6 @@ const useForget = (pwdType: any) => {
   console.log(url);
 
   const Forget = (email: string, setLoading: (Params: any) => any) => {
-    const token = window.localStorage.getItem("token");
     if (pwdType === "brandpassword") {
       axios
         .post(url, {

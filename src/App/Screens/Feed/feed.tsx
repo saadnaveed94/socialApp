@@ -35,6 +35,7 @@ export const Feed = () => {
   const { GetChallenges } = useGetChallenges();
   React.useEffect(() => {
     GetChallenges();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   let navigate = useNavigate();

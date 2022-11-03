@@ -91,7 +91,7 @@ export default function AddTrickModal(props: any) {
               type="file"
               onChange={handleChange}
             />
-            <img src={PreviewImage} width="300px" height="auto"></img>
+            <img src={PreviewImage} width="300px" height="auto" alt=""></img>
           </Box>
 
           <Box sx={{ display: "flex", mt: 3 }}>

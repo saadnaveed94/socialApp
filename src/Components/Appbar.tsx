@@ -18,7 +18,7 @@ import {
   AppBar,
 } from "@mui/material";
 
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 
 const Search = styled("div")(({ theme }: any) => ({
   position: "relative",
@@ -158,7 +158,6 @@ export default function PrimarySearchAppBar(props: any) {
     </Menu>
   );
 
-  let navigate = useNavigate();
   let { userType } = useParams();
   return (
     <Box sx={{ flexGrow: 1 }}>
