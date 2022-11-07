@@ -30,6 +30,10 @@ const useLogin = (userType: any) => {
             "token",
             JSON.stringify(response.data.brand.token)
           );
+          window.localStorage.setItem(
+            "userId",
+            JSON.stringify(response.data.brand.id)
+          );
 
           navigate("/feed/brand");
           setLoading(false);
@@ -53,6 +57,10 @@ const useLogin = (userType: any) => {
             "token",
             JSON.stringify(response.data.admin.token)
           );
+          window.localStorage.setItem(
+            "userId",
+            JSON.stringify(response.data.admin.id)
+          );
           navigate("/feed/admin");
           setLoading(false);
         })
@@ -74,6 +82,10 @@ const useLogin = (userType: any) => {
           window.localStorage.setItem(
             "token",
             JSON.stringify(response.data.customer.token)
+          );
+          window.localStorage.setItem(
+            "userId",
+            JSON.stringify(response.data.customer.id)
           );
           navigate("/feed/customer");
           setLoading(false);

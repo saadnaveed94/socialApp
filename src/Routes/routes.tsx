@@ -18,7 +18,6 @@ export const Navigation = () => {
       <Routes>
         <Route path="/" element={<Navigate to="/login/customer" />} />
         <Route path="/:userType" element={<Signup />} />
-
         <Route path="/reset" element={<ResetPage />} />
         <Route path="/login/:userType" element={<Login />} />
         <Route path="/forgotpassword/:pwdType" element={<ForgotPassword />} />
@@ -26,7 +25,7 @@ export const Navigation = () => {
         <Route path="/404_Not_Found" element={<>Page not found</>} />
         <Route element={<ProtectedRoute />}>
           <Route path="/feed/:userType" element={<Feed />} />
-          <Route path="/feed/tricks/" element={<Tricks />} />
+          <Route path="/feed/:userType/tricks/" element={<Tricks />} />
         </Route>
       </Routes>
     </Router>
