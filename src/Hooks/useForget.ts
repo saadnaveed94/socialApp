@@ -1,19 +1,21 @@
-import React from "react";
 import axios from "axios";
-import { Params } from "react-router-dom";
 
-const useForget = (userType: any) => {
+const useForget = (pwdType: any) => {
   let url =
-    userType === "admin"
-      ? "https://project2-p2.herokuapp.com/api/admins/password"
-      : userType === "customer"
-      ? "https://project2-p2.herokuapp.com/api/customers/password"
-      : "https://project2-p2.herokuapp.com/api/brands/password";
+    pwdType === "admin"
+      ? "http://192.168.99.104:3000/api/admins/password"
+      : pwdType === "customerpassword"
+      ? "http://192.168.99.104:3000/api/customers/password"
+      : "http://192.168.99.104:3000/api/brands/password";
   console.log(url);
 
-  const Forget = (email: string, setLoading: (Params: any) => any) => {
+  const Forget = (
+    email: string,
+    setLoading: (Params: any) => any,
+    setOpen: (Params: any) => any
+  ) => {
     const token = window.localStorage.getItem("token");
-    if (userType === "brand") {
+    if (pwdType === "brand") {
       axios
         .post(url, {
           brand: {
@@ -31,9 +33,10 @@ const useForget = (userType: any) => {
         .catch(function (error: string) {
           console.log(error);
           setLoading(false);
+          setOpen(true);
         });
     }
-    if (userType === "admin") {
+    if (pwdType === "admin") {
       axios
         .post(url, {
           admin: {
@@ -51,9 +54,10 @@ const useForget = (userType: any) => {
         .catch(function (error: string) {
           console.log(error);
           setLoading(false);
+          setOpen(true);
         });
     }
-    if (userType === "customer") {
+    if (pwdType === "customer") {
       axios
         .post(url, {
           customer: {
@@ -71,6 +75,7 @@ const useForget = (userType: any) => {
         .catch(function (error: string) {
           console.log(error);
           setLoading(false);
+          setOpen(true);
         });
     }
   };

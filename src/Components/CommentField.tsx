@@ -2,14 +2,6 @@ import * as React from "react";
 import InputUnstyled from "@mui/base/InputUnstyled";
 import { styled } from "@mui/system";
 
-const blue = {
-  100: "#DAECFF",
-  200: "#b6daff",
-  400: "#3399FF",
-  500: "#007FFF",
-  600: "#0072E5",
-};
-
 const grey = {
   50: "#f6f8fa",
   100: "#eaeef2",

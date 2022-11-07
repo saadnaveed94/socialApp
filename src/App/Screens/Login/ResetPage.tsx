@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-import './Login.css';
+import React, { useState } from "react";
+import "./Login.css";
 import { useFormik } from "formik";
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 import * as yup from "yup";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
@@ -17,7 +17,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import { Navigate, redirect, useParams } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import useForget from '../../../Hooks/useForget';
-import CustomizedSnackbars from '../../../components/ChangePasswordToast';
+import CustomizedSnackbars from "../../../Components/Toast";
 import useReset from '../../../Hooks/useReset';
 import { Typography } from '@mui/joy';
 const validationSchema = yup.object({
@@ -41,7 +41,7 @@ const validationSchema = yup.object({
 
 
 const ResetPage = (props: any) => {
-  const [openToast, setOpenToast] = React.useState(false);
+
   const [open, setOpen] = React.useState(false);
   const [values, setValues] = React.useState({
     password: "",
@@ -70,7 +70,6 @@ const ResetPage = (props: any) => {
     event.preventDefault();
   };
 
-
   const formik = useFormik({
     initialValues: {
 
@@ -82,7 +81,7 @@ const ResetPage = (props: any) => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       setLoading(true);
-      ResetPwd(values.password, values.confirmPassword, values.usertoken, setLoading);
+      ResetPwd(values.password, values.confirmPassword, values.usertoken, setLoading, setOpen, open);
 
     }
 
@@ -90,15 +89,11 @@ const ResetPage = (props: any) => {
   })
 
   return (
-
-    <Box className='login'>
-      <Box className='loginWrapper'>
-        <Box className='loginLeft'>
-          <h3 className='loginText'>Social Media App</h3>
-          <Box className='loginDesc'>
-            Connect with each other!
-          </Box>
-
+    <Box className="login">
+      <Box className="loginWrapper">
+        <Box className="loginLeft">
+          <h3 className="loginText">Social Media App</h3>
+          <Box className="loginDesc">Connect with each other!</Box>
         </Box>
         <Box className='loginRight'>
           <Box className='loginBox'>
@@ -200,43 +195,43 @@ const ResetPage = (props: any) => {
                 /> */}
 
 
-                {
-                  loading && <Box sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginLeft: '-6rem'
-                  }}><CircularProgress></CircularProgress></Box>
-                }
+                {loading && (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginLeft: "-6rem",
+                    }}
+                  >
+                    <CircularProgress></CircularProgress>
+                  </Box>
+                )}
 
                 <Button variant='contained' className='loginButton' type="submit" sx={{
                   margin: '8px', color: 'white'
-                }} onClick={CustomizedSnackbars}
+                }}
                 >
                   Change Password
                 </Button>
                 <br></br>
-                <CustomizedSnackbars openToast={openToast}
-                  setOpenToast={setOpenToast}  >
-
-                </CustomizedSnackbars>
+                <CustomizedSnackbars
+                  open={open}
+                  setOpen={setOpen}
+                  text={"Your password has been successfully updated"}
+                ></CustomizedSnackbars>
 
                 {/* <span id="span">LOGIN</span> */}
                 <br></br>
 
                 <br></br>
-              </form>
-            </Box>
-
-
-          </Box>
-        </Box>
-
+              </form >
+            </Box >
+          </Box >
+        </Box >
       </Box >
     </Box >
-
-  )
-}
+  );
+};
 
 export default ResetPage;
-
