@@ -156,7 +156,7 @@ export default function AddChallengeModal(props: any) {
                 onChange={handleChange}
               />
 
-              <img src={PreviewImage} width="auto" height="auto"></img>
+              <img src={PreviewImage} width="auto" height="auto" alt=""></img>
             </Box>
           </Box>
 

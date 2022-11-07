@@ -6,9 +6,9 @@ import Box from "@mui/material/Box";
 
 const CommentField = (props: any) => {
   const [itemsToShow, setItemsToShow] = useState(5);
-  const comments = props.commentsValue;
+  const commentsField = props.commentsValue;
   const showmore = () => {
-    setItemsToShow(comments.length);
+    setItemsToShow(commentsField.length);
   };
   const showless = () => {
     setItemsToShow(5);
@@ -30,14 +30,14 @@ const CommentField = (props: any) => {
           </button>
         </AccordionSummary>
         <AccordionDetails>
-          {comments.slice(0, itemsToShow).map((value: any, key: string) => {
+          {commentsField.slice(0, itemsToShow).map((value: any, key: string) => {
             return (
               <Box
                 key={value.id}
                 sx={{
                   lineHeight: "3rem",
                   borderBottom: "1px solid rgb(230 230 230 / 87%)",
-                  paddingLeft: "20px",
+                  paddingLeft: "10px",
                   marginBottom: "20px",
                   fontSize: "13px",
                 }}

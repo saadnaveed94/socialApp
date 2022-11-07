@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import * as React from "react";
-import { adminContextType, adminDataType } from "../@types/admin";
+import { adminDataType } from "../@types/admin";
 
 export const adminContext = createContext<any>(null);
 
@@ -9,7 +9,7 @@ export const AdminProvider = ({ children }: any) => {
 
   const [comments, setComments] = React.useState<adminDataType>([]);
   const [challenges, setChallenges] = React.useState<any>([]);
-  return (
+  return ( 
     <adminContext.Provider
       value={{
         data: adminData,

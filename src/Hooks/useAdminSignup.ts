@@ -1,16 +1,15 @@
-import React from "react";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const useAdminSignup = (userType: any) => { 
-  const navigate = useNavigate();
+  let navigate = useNavigate();
   let url =
     userType === "admin"
-      ? "https://project2-p2.herokuapp.com/api/admins"
+      ? "http://192.168.99.104:3000/api/admins"
       : userType === "brand"
-      ? "https://project2-p2.herokuapp.com/api/brands"
+      ? "http://192.168.99.104:3000/api/brands"
       : userType === "customer"
-      ? "https://project2-p2.herokuapp.com/api/customers"
+      ? "http://192.168.99.104:3000/api/customers"
       : "/404_Not_Found";
   const adminSignup = (
     name: string,
@@ -19,7 +18,6 @@ const useAdminSignup = (userType: any) => {
     location: string,
     setLoading: (Params: any) => any
   ) => {
-    const token = window.localStorage.getItem("token");
     if (userType === "admin") {
       axios
         .post(url, {
@@ -36,7 +34,7 @@ const useAdminSignup = (userType: any) => {
             JSON.stringify(response.data.admin.token)
           );
 
-          navigate(`/feed/${userType}`);
+          navigate("/feed/admin");
           setLoading(false);
         })
 
@@ -61,7 +59,7 @@ const useAdminSignup = (userType: any) => {
             "token",
             JSON.stringify(response.data.brand.token)
           );
-          navigate("/feed");
+          navigate("/feed/brand");
           setLoading(false);
         })
         .catch(function (error: string) {
@@ -85,7 +83,7 @@ const useAdminSignup = (userType: any) => {
             "token",
             JSON.stringify(response.data.customer.token)
           );
-          navigate("/feed");
+          navigate("/feed/customer");
           setLoading(false);
         })
         .catch(function (error: string) {

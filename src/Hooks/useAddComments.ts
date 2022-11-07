@@ -1,7 +1,12 @@
 import React from "react";
 import axios from "axios";
+import { adminContext } from "../Contexts/Admin";
+import useGetChallenges from "./useGetChallenges";
 
 const useAddComments = () => {
+  const { setChallenges, challenges } = React.useContext(adminContext);
+  const { setComments, comments } = React.useContext(adminContext);
+  const { GetChallenges } = useGetChallenges();
   const PostComments = (
     challengeId: string | undefined,
     newComment: string
@@ -13,7 +18,7 @@ const useAddComments = () => {
 
     var config = {
       method: "post",
-      url: `https://project2-p2.herokuapp.com/api/challenges/${challengeId}/comments`,
+      url: `http://192.168.99.104:3000/api/challenges/${challengeId}/comments`,
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -24,6 +29,8 @@ const useAddComments = () => {
     axios(config)
       .then(function (response: any) {
         console.log(response.data);
+        // setComments({...comments, comments: response.data});
+        GetChallenges();
       })
       .catch(function (error: any) {
         console.log("front end ");
