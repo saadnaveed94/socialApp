@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./Login.css";
 import { useFormik } from "formik";
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import * as yup from "yup";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -14,9 +13,8 @@ import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 
 
-import { Navigate, redirect, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
-import useForget from '../../../Hooks/useForget';
 import CustomizedSnackbars from "../../../Components/Toast";
 import useReset from '../../../Hooks/useReset';
 import { Typography } from '@mui/joy';
@@ -43,27 +41,16 @@ const validationSchema = yup.object({
 const ResetPage = (props: any) => {
 
   const [open, setOpen] = React.useState(false);
-  const [values, setValues] = React.useState({
-    password: "",
-    showPassword: false
-  });
-  const [passwordShown, setPasswordShown] = useState(false);
+
   let { userType, token } = useParams();
   console.log("Reset type in forget password", userType, token);
   const { ResetPwd } = useReset(userType, token);
   const [loading, setLoading] = useState(false);
-  interface State {
-    password: string;
-    showPassword: boolean;
-  }
+
+
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
-  const togglePassword = () => {
-    // When the handler is invoked
-    // chnage inverse the boolean state passwordShown
-    setPasswordShown(!passwordShown);
-  };
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
