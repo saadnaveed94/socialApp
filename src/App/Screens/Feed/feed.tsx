@@ -64,20 +64,22 @@ export const Feed = () => {
     PostLikes(challengeId);
   };
 
-  const { DeleteChallenge } = useDeleteChallenge();
   const userId = Number(window.localStorage.getItem("userId"));
 
   return (
     <>
       {userType === "brand" && (
-        <><AddChallengeModal
-          open={modalOpen}
-          setOpen={setModalOpen}
-        ></AddChallengeModal><AlertDialog
-          open={dialogOpen}
-          setOpen={setDialogOpen}
-          challengeId={challengeId}
-        ></AlertDialog></>
+        <>
+          <AddChallengeModal
+            open={modalOpen}
+            setOpen={setModalOpen}
+          ></AddChallengeModal>
+          <AlertDialog
+            open={dialogOpen}
+            setOpen={setDialogOpen}
+            challengeId={challengeId}
+          ></AlertDialog>
+        </>
       )}
 
       <PrimarySearchAppBar setModalOpen={setModalOpen}></PrimarySearchAppBar>
