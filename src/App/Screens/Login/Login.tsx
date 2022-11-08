@@ -5,10 +5,10 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import * as yup from "yup";
-import useLogin from "../../../Hooks/useLogin";
-import { Link, Navigate, useParams } from "react-router-dom";
-import CircularProgress from "@mui/material/CircularProgress";
-import CustomizedSnackbars from "../../../Components/Toast";
+import useLogin from '../../../Hooks/useLogin';
+import { Link, Navigate, useParams } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
+import CustomizedSnackbars from '../../../Components/Toast';
 
 const validationSchema = yup.object({
   email: yup
@@ -22,7 +22,7 @@ const validationSchema = yup.object({
 });
 
 const Login = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open] = React.useState(false);
 
   let { userType } = useParams();
   console.log("usertype in login:", userType);
