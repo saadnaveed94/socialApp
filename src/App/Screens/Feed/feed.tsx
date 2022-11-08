@@ -19,7 +19,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import FlashOnIcon from "@mui/icons-material/FlashOn";
 
-import PrimarySearchAppBar from "../../../components/Appbar";
+import PrimarySearchAppBar from "../../../Components/Appbar";
 import AddChallengeModal from "./AddChallengeModal";
 import AddTrickModal from "./AddTrickModal";
 import useGetChallenges from "../../../Hooks/useGetChallenges";
@@ -98,9 +98,9 @@ export const Feed = () => {
                   component="img"
                   image={`http://192.168.99.104:3000${value?.images[0]}`}
 
-                  // image={
-                  //   "http://192.168.99.104:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhabUpyY21GNE5IbHlNVzUzZUdKM05XZDFhVFk0Y3pOaU4zYzVhUVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpVjJsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SW1SdmQyNXNiMkZrSUNVeU9ERWxNamt1YW5CbFp5STdJR1pwYkdWdVlXMWxLajFWVkVZdE9DY25aRzkzYm14dllXUWxNakFsTWpneEpUSTVMbXB3WldjR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTExLTAzVDEzOjI3OjAzLjk0OVoiLCJwdXIiOiJibG9iX2tleSJ9fQ==--6807dc99412faaf6ce0dcdd333b64491a5e02f6b/download%20(1).jpeg"
-                  // }
+                // image={
+                //   "http://192.168.99.104:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhabUpyY21GNE5IbHlNVzUzZUdKM05XZDFhVFk0Y3pOaU4zYzVhUVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpVjJsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SW1SdmQyNXNiMkZrSUNVeU9ERWxNamt1YW5CbFp5STdJR1pwYkdWdVlXMWxLajFWVkVZdE9DY25aRzkzYm14dllXUWxNakFsTWpneEpUSTVMbXB3WldjR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTExLTAzVDEzOjI3OjAzLjk0OVoiLCJwdXIiOiJibG9iX2tleSJ9fQ==--6807dc99412faaf6ce0dcdd333b64491a5e02f6b/download%20(1).jpeg"
+                // }
                 />
                 <CardContent>
                   <Typography variant="body2" color="text.secondary">
