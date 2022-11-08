@@ -18,7 +18,11 @@ export const Tricks = () => {
   const challengeId = Number(url.searchParams.get("ChallengeId"));
 
   const item = challenges.find((item: any) => item.id === challengeId);
-  setPreviewImage(URL.createObjectURL(item.images[0]));
+
+  if (previewImage) {
+    setPreviewImage(URL.createObjectURL(item.images[0]));
+  }
+
   console.log("item=", item);
 
   return (
