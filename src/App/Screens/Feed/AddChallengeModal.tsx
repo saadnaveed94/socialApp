@@ -3,9 +3,6 @@ import Textarea from "@mui/joy/Textarea";
 import usePostChallenge from "../../../Hooks/usePostChallenge";
 import { Box, Button, Typography, Modal, styled, Chip } from "@mui/material";
 
-// interface TagData {
-//   label: string;
-// }
 const ListItem = styled("li")(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));

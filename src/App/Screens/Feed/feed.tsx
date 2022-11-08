@@ -13,14 +13,11 @@ import {
   CardActions,
   Button,
   Tooltip,
+  CardActionArea,
 } from "@mui/material";
 import Textarea from "@mui/joy/Textarea";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ShareIcon from "@mui/icons-material/Share";
 import FlashOnIcon from "@mui/icons-material/FlashOn";
-
 import PrimarySearchAppBar from "../../../Components/Appbar";
 import AddChallengeModal from "./AddChallengeModal";
 import AddTrickModal from "./AddTrickModal";
@@ -30,10 +27,9 @@ import moment from "moment/moment";
 import useAddComments from "../../../Hooks/useAddComments";
 import CommentField from "../../../Components/CommentField";
 import useDeleteChallenge from "../../../Hooks/useDeleteChallenge";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import useAddLikes from "../../../Hooks/useAddLikes";
-import { count } from "console";
+import AlertDialog from "../../../Components/AlertDialog";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export const Feed = () => {
   const [newComment, setNewComment] = React.useState<string>("");
@@ -41,6 +37,7 @@ export const Feed = () => {
   const { PostLikes } = useAddLikes();
   const [newLikes, setNewLikes] = React.useState<string>("");
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const [dialogOpen, setDialogOpen] = React.useState(false);
   const [challengeId, setChallengeId] = React.useState<string>("");
 
   const { challenges, comments } = React.useContext(adminContext);
@@ -68,14 +65,19 @@ export const Feed = () => {
   };
 
   const { DeleteChallenge } = useDeleteChallenge();
+  const userId = Number(window.localStorage.getItem("userId"));
 
   return (
     <>
       {userType === "brand" && (
-        <AddChallengeModal
+        <><AddChallengeModal
           open={modalOpen}
           setOpen={setModalOpen}
-        ></AddChallengeModal>
+        ></AddChallengeModal><AlertDialog
+          open={dialogOpen}
+          setOpen={setDialogOpen}
+          challengeId={challengeId}
+        ></AlertDialog></>
       )}
 
       <PrimarySearchAppBar setModalOpen={setModalOpen}></PrimarySearchAppBar>
@@ -102,14 +104,17 @@ export const Feed = () => {
                       </Avatar>
                     }
                     action={
-                      <IconButton
-                        aria-label="settings"
-                        onClick={() => {
-                          DeleteChallenge(value.id);
-                        }}
-                      >
-                        <MoreVertIcon />
-                      </IconButton>
+                      userId === value.brand_id && (
+                        <IconButton
+                          aria-label="settings"
+                          onClick={() => {
+                            setDialogOpen(true);
+                            setChallengeId(value.id);
+                          }}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      )
                     }
                     title={value.title}
                     subheader={moment(value.created_at).format("ll")}

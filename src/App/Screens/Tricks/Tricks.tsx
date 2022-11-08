@@ -2,46 +2,50 @@ import * as React from "react";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
-import {  Container, Box, Typography } from "@mui/material";
+import { adminContext } from "../../../Contexts/Admin";
 import ChallengeCard from "./ChallengeCard";
+import { Container, Box } from "@mui/material";
 const styleContainer = {
   display: "flex",
-
   mt: 2,
 };
 
 export const Tricks = () => {
+  const [previewImage, setPreviewImage] = React.useState<string>("");
+  const { challenges } = React.useContext(adminContext);
+
+  const url = new URL(window.location.href);
+  const challengeId = Number(url.searchParams.get("ChallengeId"));
+
+  const item = challenges.find((item: any) => item.id === challengeId);
+
+  if (previewImage) {
+    setPreviewImage(URL.createObjectURL(item.images[0]));
+  }
+
+  console.log("item=", item);
+
   return (
     <Container sx={styleContainer}>
-     
-      <Box sx={{display: "flex", flexDirection: "row"}}>
-      <ChallengeCard></ChallengeCard>
-        {/* <Typography
-          onClick={console.log("clicked")}
-          variant="h5"
-          sx={styleContainer}
-        >
-          Challenge Name
-        </Typography> */}
+      <Box sx={{ display: "flex", flexDirection: "row" }}>
+        <ChallengeCard></ChallengeCard>
+
         <ImageList sx={{ width: 500, height: 450 }}>
-          {itemData.map((item) => (
-            <ImageListItem key={item.img}>
-              <img
-                src={`${item.img}?w=248&fit=crop&auto=format`}
-                srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                alt={item.title}
-                loading="lazy"
-              />
-              <ImageListItemBar
-                title={item.title}
-                subtitle={<span>by: {item.author}</span>}
-                position="below"
-              />
-            </ImageListItem>
-          ))}
+          <ImageListItem>
+            <img
+              src={`http://192.168.99.104:3000${previewImage}?w=248&fit=crop&auto=format`}
+              srcSet={`http://192.168.99.104:3000${previewImage}?w=248&fit=crop&auto=format`}
+              alt={item.description}
+              loading="lazy"
+            />
+            <ImageListItemBar
+              title={item.description}
+              subtitle={<span>by: {item.title}</span>}
+              position="below"
+            />
+          </ImageListItem>
         </ImageList>
       </Box>
-
     </Container>
   );
 };

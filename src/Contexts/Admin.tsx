@@ -8,7 +8,8 @@ export const AdminProvider = ({ children }: any) => {
   const [adminData, setAdminData] = React.useState<adminDataType>([]);
   const [comments, setComments] = React.useState<adminDataType>([]);
   const [challenges, setChallenges] = React.useState<any>([]);
-  return ( 
+  const [tricks, setTricks] = React.useState<any>([]);
+  return (
     <adminContext.Provider
       value={{
         data: adminData,
@@ -17,6 +18,8 @@ export const AdminProvider = ({ children }: any) => {
         setComments,
         challenges: challenges,
         setChallenges,
+        tricks: tricks,
+        setTricks,
       }}
     >
       {children}

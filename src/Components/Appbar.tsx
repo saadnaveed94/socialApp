@@ -21,7 +21,6 @@ import {
 
 import { useParams } from "react-router";
 
- 
 const Search = styled("div")(({ theme }: any) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -84,7 +83,7 @@ export default function PrimarySearchAppBar(props: any) {
   };
   const handleLogout = () => {
     window.localStorage.removeItem("token");
-    navigate("/login/customer");
+    navigate("/customer/login");
   };
 
   const handleMobileMenuOpen = (event: any) => {
@@ -238,7 +237,7 @@ export default function PrimarySearchAppBar(props: any) {
               aria-label="show more"
               aria-controls={mobileMenuId}
               aria-haspopup="true"
-              onClick={handleMobileMenuOpen} 
+              onClick={handleMobileMenuOpen}
               color="inherit"
             >
               <MoreIcon />
