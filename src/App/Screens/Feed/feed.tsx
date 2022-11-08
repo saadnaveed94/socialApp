@@ -26,7 +26,6 @@ import { adminContext } from "../../../Contexts/Admin";
 import moment from "moment/moment";
 import useAddComments from "../../../Hooks/useAddComments";
 import CommentField from "../../../Components/CommentField";
-import useDeleteChallenge from "../../../Hooks/useDeleteChallenge";
 import useAddLikes from "../../../Hooks/useAddLikes";
 import AlertDialog from "../../../Components/AlertDialog";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -35,16 +34,16 @@ export const Feed = () => {
   const [newComment, setNewComment] = React.useState<string>("");
   const { PostComments } = useAddComments();
   const { PostLikes } = useAddLikes();
-  const [newLikes, setNewLikes] = React.useState<string>("");
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [challengeId, setChallengeId] = React.useState<string>("");
 
-  const { challenges, comments } = React.useContext(adminContext);
+  const { challenges } = React.useContext(adminContext);
 
   const { GetChallenges } = useGetChallenges();
   React.useEffect(() => {
     GetChallenges();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   let navigate = useNavigate();
@@ -121,16 +120,17 @@ export const Feed = () => {
                     title={value.title}
                     subheader={moment(value.created_at).format("ll")}
                   />
-
-                  <CardMedia
-                    sx={{ maxHeight: "300px" }}
-                    component="img"
-                    image={`http://192.168.99.104:3000${value?.images[0]}`}
-
-                    // image={
-                    //   "http://192.168.99.104:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhabUpyY21GNE5IbHlNVzUzZUdKM05XZDFhVFk0Y3pOaU4zYzVhUVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpVjJsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SW1SdmQyNXNiMkZrSUNVeU9ERWxNamt1YW5CbFp5STdJR1pwYkdWdVlXMWxLajFWVkVZdE9DY25aRzkzYm14dllXUWxNakFsTWpneEpUSTVMbXB3WldjR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTExLTAzVDEzOjI3OjAzLjk0OVoiLCJwdXIiOiJibG9iX2tleSJ9fQ==--6807dc99412faaf6ce0dcdd333b64491a5e02f6b/download%20(1).jpeg"
-                    // }
-                  />
+                  <CardActionArea
+                    onClick={() => {
+                      navigate(`/feed/brand/tricks/?ChallengeId=${value.id}`);
+                    }}
+                  >
+                    <CardMedia
+                      sx={{ maxHeight: "300px" }}
+                      component="img"
+                      image={`http://192.168.99.104:3000${value?.images[0]}`}
+                    />
+                  </CardActionArea>
                   <CardContent>
                     <Typography variant="body2" color="text.secondary">
                       {value.description}

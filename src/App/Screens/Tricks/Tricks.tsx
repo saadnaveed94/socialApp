@@ -5,110 +5,54 @@ import ImageListItemBar from "@mui/material/ImageListItemBar";
 import { adminContext } from "../../../Contexts/Admin";
 import ChallengeCard from "./ChallengeCard";
 import { Container, Box } from "@mui/material";
+import useGetTricks from "../../../Hooks/useGetTricks";
+import PrimarySearchAppBar from "../../../Components/Appbar";
 const styleContainer = {
   display: "flex",
-  mt: 2,
+  mt: 9,
 };
 
 export const Tricks = () => {
   const [previewImage, setPreviewImage] = React.useState<string>("");
-  const { challenges } = React.useContext(adminContext);
+  const { challenges, tricks } = React.useContext(adminContext);
 
   const url = new URL(window.location.href);
   const challengeId = Number(url.searchParams.get("ChallengeId"));
-
   const item = challenges.find((item: any) => item.id === challengeId);
+  const { GetTricks } = useGetTricks();
 
-  if (previewImage) {
-    setPreviewImage(URL.createObjectURL(item.images[0]));
-  }
-
-  console.log("item=", item);
+  React.useEffect(() => {
+    GetTricks(challengeId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <Container sx={styleContainer}>
-      <Box sx={{ display: "flex", flexDirection: "row" }}>
-        <ChallengeCard></ChallengeCard>
-
-        <ImageList sx={{ width: 500, height: 450 }}>
-          <ImageListItem>
-            <img
-              src={`http://192.168.99.104:3000${previewImage}?w=248&fit=crop&auto=format`}
-              srcSet={`http://192.168.99.104:3000${previewImage}?w=248&fit=crop&auto=format`}
-              alt={item.description}
-              loading="lazy"
-            />
-            <ImageListItemBar
-              title={item.description}
-              subtitle={<span>by: {item.title}</span>}
-              position="below"
-            />
-          </ImageListItem>
+    <>
+      <PrimarySearchAppBar></PrimarySearchAppBar>
+      <Container sx={styleContainer}>
+        <ChallengeCard
+          avatar={item?.brand_id}
+          title={item?.title}
+          description={item?.description}
+        ></ChallengeCard>
+        <ImageList sx={{ width: 450, height: 400 }}>
+          {tricks &&
+            tricks.map((data: any) => (
+              <ImageListItem key={data.id}>
+                <img
+                  src={`http://192.168.99.104:3000${data?.images}`}
+                  alt="trick img"
+                  loading="lazy"
+                />
+                <ImageListItemBar
+                  title={data.description}
+                  subtitle={<span>by: {data?.customer_info?.name}</span>}
+                  position="below"
+                />
+              </ImageListItem>
+            ))}
         </ImageList>
-      </Box>
-    </Container>
+      </Container>
+    </>
   );
 };
-
-const itemData = [
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Breakfast",
-    author: "@bkristastucchio",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
-    title: "Burger",
-    author: "@rollelflex_graphy726",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
-    title: "Camera",
-    author: "@helloimnik",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
-    title: "Coffee",
-    author: "@nolanissac",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
-    title: "Hats",
-    author: "@hjrc33",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
-    title: "Honey",
-    author: "@arwinneil",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
-    title: "Basketball",
-    author: "@tjdragotta",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
-    title: "Fern",
-    author: "@katie_wasserman",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
-    title: "Mushrooms",
-    author: "@silverdalex",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
-    title: "Tomato basil",
-    author: "@shelleypauls",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-    title: "Sea star",
-    author: "@peterlaster",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-    title: "Bike",
-    author: "@southside_customs",
-  },
-];

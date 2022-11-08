@@ -6,7 +6,7 @@ const useGetTricks = () => {
   const GetTricks = (challengeId: number) => {
     var config = {
       method: "get",
-      url: `http://192.168.99.104:3000/api/challenges${challengeId}/tricks`,
+      url: `http://192.168.99.104:3000/api/challenges/${challengeId}/tricks`,
     };
 
     axios(config)
