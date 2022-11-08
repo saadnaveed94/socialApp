@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import * as yup from "yup";
-import { Navigate, redirect, useParams, Link } from 'react-router-dom';
+import { Navigate, useParams, Link } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import useForget from '../../../Hooks/useForget';
 import CustomizedSnackbars from '../../../Components/Toast';
@@ -40,9 +40,7 @@ const ForgotPassword = (props: any) => {
     return < Navigate to="/404_Not_Found" />
   }
 
-  const handleButtonClick = () => {
-    setOpen(true);
-  }
+
 
   return (
     <Box className="login">
