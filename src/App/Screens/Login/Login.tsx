@@ -10,7 +10,6 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import CustomizedSnackbars from '../../../Components/Toast';
 
-
 const validationSchema = yup.object({
   email: yup
     .string()
@@ -45,8 +44,6 @@ const Login = () => {
   if (userType !== "customer" && userType !== "admin" && userType !== "brand") {
     return <Navigate to="/404_Not_Found" />;
   }
-
-
 
   return (
     <Box className="login">
@@ -137,21 +134,20 @@ const Login = () => {
                 )}
                 <br></br>
                 {userType === "admin" ? (
-                  <Link id="span2" to='/admin/forgotpassword'>
+                  <Link id="span2" to="/admin/forgotpassword">
                     Forgot Password?
                   </Link>
                 ) : userType === "brand" ? (
-                  <Link id="span2" to='/brand/forgotpassword'>
+                  <Link id="span2" to="/brand/forgotpassword">
                     Forgot Password?
                   </Link>
-                ) : <Link id="span2" to='/customer/forgotpassword'>
-                  Forgot Password?
-                </Link>
-                }
+                ) : (
+                  <Link id="span2" to="/customer/forgotpassword">
+                    Forgot Password?
+                  </Link>
+                )}
                 <br></br>
-                <CustomizedSnackbars setOpen={open}  >
-
-                </CustomizedSnackbars>
+                <CustomizedSnackbars setOpen={open}></CustomizedSnackbars>
               </form>
             </Box>
           </Box>

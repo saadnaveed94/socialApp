@@ -1,6 +1,10 @@
 import axios from "axios";
+import * as React from "react";
+import { adminContext } from "../Contexts/Admin";
 
 const usePostChallenge = () => {
+  const { setChallenges, challenges } = React.useContext(adminContext);
+
   const postChallenge = (
     challengeName: string,
     challengeDescription: string,
@@ -26,11 +30,15 @@ const usePostChallenge = () => {
     axios(config)
       .then(function (response: any) {
         console.log(response.data);
+        setChallenges(response.data);
+
+        console.log("Challenges after update: ", challenges);
       })
       .catch(function (error: any) {
         console.log(error);
       });
   };
+
   return { postChallenge };
 };
 

@@ -13,22 +13,23 @@ import {
   CardActions,
   Button,
   Tooltip,
+  CardActionArea,
 } from "@mui/material";
 import Textarea from "@mui/joy/Textarea";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import FlashOnIcon from "@mui/icons-material/FlashOn";
-
 import PrimarySearchAppBar from "../../../Components/Appbar";
 import AddChallengeModal from "./AddChallengeModal";
 import AddTrickModal from "./AddTrickModal";
 import useGetChallenges from "../../../Hooks/useGetChallenges";
 import { adminContext } from "../../../Contexts/Admin";
 import moment from "moment/moment";
-import useDeleteChallenge from "../../../Hooks/useDeleteChallenge";
+import AlertDialog from "../../../Components/AlertDialog";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export const Feed = () => {
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const [dialogOpen, setDialogOpen] = React.useState(false);
   const [challengeId, setChallengeId] = React.useState<string>("");
 
   const { challenges } = React.useContext(adminContext);
@@ -43,18 +44,22 @@ export const Feed = () => {
   if (userType !== "customer" && userType !== "admin" && userType !== "brand") {
     navigate("/404_Not_Found");
   }
-
-  const { DeleteChallenge } = useDeleteChallenge();
-
-  //var item = challenges.find((item) => item._id === props.challengeId);
+  const userId = Number(window.localStorage.getItem("userId"));
 
   return (
     <>
       {userType === "brand" && (
-        <AddChallengeModal
-          open={modalOpen}
-          setOpen={setModalOpen}
-        ></AddChallengeModal>
+        <>
+          <AddChallengeModal
+            open={modalOpen}
+            setOpen={setModalOpen}
+          ></AddChallengeModal>
+          <AlertDialog
+            open={dialogOpen}
+            setOpen={setDialogOpen}
+            challengeId={challengeId}
+          ></AlertDialog>
+        </>
       )}
 
       <PrimarySearchAppBar setModalOpen={setModalOpen}></PrimarySearchAppBar>
@@ -80,28 +85,32 @@ export const Feed = () => {
                     </Avatar>
                   }
                   action={
-                    <IconButton
-                      aria-label="settings"
-                      onClick={() => {
-                        DeleteChallenge(value.id);
-                      }}
-                    >
-                      <MoreVertIcon />
-                    </IconButton>
+                    userId === value.brand_id && (
+                      <IconButton
+                        aria-label="settings"
+                        onClick={() => {
+                          setDialogOpen(true);
+                          setChallengeId(value.id);
+                        }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    )
                   }
                   title={value.title}
                   subheader={moment(value.created_at).format("ll")}
                 />
-
-                <CardMedia
-                  sx={{ maxHeight: "300px" }}
-                  component="img"
-                  image={`http://192.168.99.104:3000${value?.images[0]}`}
-
-                // image={
-                //   "http://192.168.99.104:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhabUpyY21GNE5IbHlNVzUzZUdKM05XZDFhVFk0Y3pOaU4zYzVhUVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpVjJsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SW1SdmQyNXNiMkZrSUNVeU9ERWxNamt1YW5CbFp5STdJR1pwYkdWdVlXMWxLajFWVkVZdE9DY25aRzkzYm14dllXUWxNakFsTWpneEpUSTVMbXB3WldjR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTExLTAzVDEzOjI3OjAzLjk0OVoiLCJwdXIiOiJibG9iX2tleSJ9fQ==--6807dc99412faaf6ce0dcdd333b64491a5e02f6b/download%20(1).jpeg"
-                // }
-                />
+                <CardActionArea
+                  onClick={() => {
+                    navigate(`/feed/brand/tricks/?ChallengeId=${value.id}`);
+                  }}
+                >
+                  <CardMedia
+                    sx={{ maxHeight: "300px" }}
+                    component="img"
+                    image={`http://192.168.99.104:3000${value?.images[0]}`}
+                  />
+                </CardActionArea>
                 <CardContent>
                   <Typography variant="body2" color="text.secondary">
                     {value.description}
