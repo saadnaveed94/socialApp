@@ -18,14 +18,14 @@ import {
 import Textarea from "@mui/joy/Textarea";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FlashOnIcon from "@mui/icons-material/FlashOn";
-import DeleteIcon from "@mui/icons-material/Delete";
-import PrimarySearchAppBar from "../../../components/Appbar";
+import PrimarySearchAppBar from "../../../Components/Appbar";
 import AddChallengeModal from "./AddChallengeModal";
 import AddTrickModal from "./AddTrickModal";
 import useGetChallenges from "../../../Hooks/useGetChallenges";
 import { adminContext } from "../../../Contexts/Admin";
 import moment from "moment/moment";
-import AlertDialog from "../../../components/AlertDialog";
+import AlertDialog from "../../../Components/AlertDialog";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export const Feed = () => {
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
@@ -44,7 +44,6 @@ export const Feed = () => {
   if (userType !== "customer" && userType !== "admin" && userType !== "brand") {
     navigate("/404_Not_Found");
   }
-
   const userId = Number(window.localStorage.getItem("userId"));
 
   return (

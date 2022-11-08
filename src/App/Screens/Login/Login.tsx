@@ -6,9 +6,9 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import * as yup from "yup";
 import useLogin from "../../../Hooks/useLogin";
-
 import { Link, Navigate, useParams } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+import CustomizedSnackbars from "../../../Components/Toast";
 
 const validationSchema = yup.object({
   email: yup
@@ -22,6 +22,8 @@ const validationSchema = yup.object({
 });
 
 const Login = () => {
+  const [open, setOpen] = React.useState(false);
+
   let { userType } = useParams();
   console.log("usertype in login:", userType);
   const [loading, setLoading] = useState(false);
@@ -132,18 +134,20 @@ const Login = () => {
                 )}
                 <br></br>
                 {userType === "admin" ? (
-                  <Link id="span2" to="/forgotpassword/adminpassword">
+                  <Link id="span2" to="/admin/forgotpassword">
                     Forgot Password?
                   </Link>
                 ) : userType === "brand" ? (
-                  <Link id="span2" to="/forgotpassword/brandpassword">
+                  <Link id="span2" to="/brand/forgotpassword">
                     Forgot Password?
                   </Link>
                 ) : (
-                  <Link id="span2" to="/forgotpassword/customerpassword">
+                  <Link id="span2" to="/customer/forgotpassword">
                     Forgot Password?
                   </Link>
                 )}
+                <br></br>
+                <CustomizedSnackbars setOpen={open}></CustomizedSnackbars>
               </form>
             </Box>
           </Box>

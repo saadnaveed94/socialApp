@@ -17,18 +17,15 @@ export default function CustomizedSnackbars(props: any) {
     if (reason === "clickaway") {
       return;
     }
-
     props.setOpen(false);
   };
 
   return (
     <>
-      {/* <Button >
-        Open success snackbar
-      </Button> */}
-      <Snackbar open={props.open} autoHideDuration={6000} onClose={handleClose}>
+
+      <Snackbar open={props.open} autoHideDuration={3000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          This is a success message!
+          {props.text}
         </Alert>
       </Snackbar>
     </>

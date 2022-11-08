@@ -2,12 +2,11 @@ import * as React from "react";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
-import { Container, Box } from "@mui/material";
 import { adminContext } from "../../../Contexts/Admin";
-
+import ChallengeCard from "./ChallengeCard";
+import { Container, Box } from "@mui/material";
 const styleContainer = {
   display: "flex",
-  justifyContent: "center",
   mt: 2,
 };
 
@@ -24,7 +23,9 @@ export const Tricks = () => {
 
   return (
     <Container sx={styleContainer}>
-      <Box>
+      <Box sx={{ display: "flex", flexDirection: "row" }}>
+        <ChallengeCard></ChallengeCard>
+
         <ImageList sx={{ width: 500, height: 450 }}>
           <ImageListItem>
             <img

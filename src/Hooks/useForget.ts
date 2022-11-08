@@ -2,15 +2,20 @@ import axios from "axios";
 
 const useForget = (pwdType: any) => {
   let url =
-    pwdType === "adminpassword"
+    pwdType === "admin"
       ? "http://192.168.99.104:3000/api/admins/password"
       : pwdType === "customerpassword"
       ? "http://192.168.99.104:3000/api/customers/password"
       : "http://192.168.99.104:3000/api/brands/password";
   console.log(url);
 
-  const Forget = (email: string, setLoading: (Params: any) => any) => {
-    if (pwdType === "brandpassword") {
+  const Forget = (
+    email: string,
+    setLoading: (Params: any) => any,
+    setOpen: (Params: any) => any
+  ) => {
+    const token = window.localStorage.getItem("token");
+    if (pwdType === "brand") {
       axios
         .post(url, {
           brand: {
@@ -28,9 +33,10 @@ const useForget = (pwdType: any) => {
         .catch(function (error: string) {
           console.log(error);
           setLoading(false);
+          setOpen(true);
         });
     }
-    if (pwdType === "adminpassword") {
+    if (pwdType === "admin") {
       axios
         .post(url, {
           admin: {
@@ -48,9 +54,10 @@ const useForget = (pwdType: any) => {
         .catch(function (error: string) {
           console.log(error);
           setLoading(false);
+          setOpen(true);
         });
     }
-    if (pwdType === "customerpassword") {
+    if (pwdType === "customer") {
       axios
         .post(url, {
           customer: {
@@ -68,6 +75,7 @@ const useForget = (pwdType: any) => {
         .catch(function (error: string) {
           console.log(error);
           setLoading(false);
+          setOpen(true);
         });
     }
   };
