@@ -1,6 +1,8 @@
 import axios from "axios";
+import useGetChallenges from "./useGetChallenges";
 
 const useDeleteChallenge = () => {
+  const { GetChallenges } = useGetChallenges();
   const DeleteChallenge = (challengeId: string) => {
     const token = window.localStorage.getItem("token");
 
@@ -16,6 +18,7 @@ const useDeleteChallenge = () => {
     axios(config)
       .then(function (response: any) {
         console.log(response.data);
+        GetChallenges();
       })
       .catch(function (error: any) {
         console.log(error);
