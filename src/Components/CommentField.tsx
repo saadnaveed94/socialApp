@@ -30,22 +30,26 @@ const CommentField = (props: any) => {
           </button>
         </AccordionSummary>
         <AccordionDetails>
-          {commentsField.slice(0, itemsToShow).map((value: any, key: string) => {
-            return (
-              <Box
-                key={value.id}
-                sx={{
-                  lineHeight: "3rem",
-                  borderBottom: "1px solid rgb(230 230 230 / 87%)",
-                  paddingLeft: "10px",
-                  marginBottom: "20px",
-                  fontSize: "13px",
-                }}
-              >
-                {value.description}
-              </Box>
-            );
-          })}
+          {commentsField &&
+            commentsField
+              .slice(0, itemsToShow)
+              .map((value: any, key: string) => {
+                return (
+                  <Box
+                    key={value.id}
+                    sx={{
+                      lineHeight: "1rem",
+                      paddingLeft: "10px",
+                      marginBottom: "20px",
+                      fontSize: "13px",
+                      paddingBottom: "11px",
+                    }}
+                  >
+                    {value?.description}
+                  </Box>
+                );
+              })}
+
           {itemsToShow === 5 ? (
             <Box>
               <button

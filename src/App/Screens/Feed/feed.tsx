@@ -31,11 +31,10 @@ import useAddLikes from "../../../Hooks/useAddLikes";
 import AlertDialog from "../../../Components/AlertDialog";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-export const Feed = () => {
+export const Feed = (props: any) => {
   const [newComment, setNewComment] = React.useState<string>("");
   const { PostComments } = useAddComments();
   const { PostLikes } = useAddLikes();
-  const [newLikes, setNewLikes] = React.useState<string>("");
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [challengeId, setChallengeId] = React.useState<string>("");
@@ -64,20 +63,22 @@ export const Feed = () => {
     PostLikes(challengeId);
   };
 
-  const { DeleteChallenge } = useDeleteChallenge();
   const userId = Number(window.localStorage.getItem("userId"));
 
   return (
     <>
       {userType === "brand" && (
-        <><AddChallengeModal
-          open={modalOpen}
-          setOpen={setModalOpen}
-        ></AddChallengeModal><AlertDialog
-          open={dialogOpen}
-          setOpen={setDialogOpen}
-          challengeId={challengeId}
-        ></AlertDialog></>
+        <>
+          <AddChallengeModal
+            open={modalOpen}
+            setOpen={setModalOpen}
+          ></AddChallengeModal>
+          <AlertDialog
+            open={dialogOpen}
+            setOpen={setDialogOpen}
+            challengeId={challengeId}
+          ></AlertDialog>
+        </>
       )}
 
       <PrimarySearchAppBar setModalOpen={setModalOpen}></PrimarySearchAppBar>
@@ -119,16 +120,17 @@ export const Feed = () => {
                     title={value.title}
                     subheader={moment(value.created_at).format("ll")}
                   />
-
-                  <CardMedia
-                    sx={{ maxHeight: "300px" }}
-                    component="img"
-                    image={`http://192.168.99.104:3000${value?.images[0]}`}
-
-                    // image={
-                    //   "http://192.168.99.104:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhabUpyY21GNE5IbHlNVzUzZUdKM05XZDFhVFk0Y3pOaU4zYzVhUVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpVjJsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SW1SdmQyNXNiMkZrSUNVeU9ERWxNamt1YW5CbFp5STdJR1pwYkdWdVlXMWxLajFWVkVZdE9DY25aRzkzYm14dllXUWxNakFsTWpneEpUSTVMbXB3WldjR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTExLTAzVDEzOjI3OjAzLjk0OVoiLCJwdXIiOiJibG9iX2tleSJ9fQ==--6807dc99412faaf6ce0dcdd333b64491a5e02f6b/download%20(1).jpeg"
-                    // }
-                  />
+                  <CardActionArea
+                    onClick={() => {
+                      navigate(`/feed/brand/tricks/?ChallengeId=${value.id}`);
+                    }}
+                  >
+                    <CardMedia
+                      sx={{ maxHeight: "300px" }}
+                      component="img"
+                      image={`http://192.168.99.104:3000${value?.images[0]}`}
+                    />
+                  </CardActionArea>
                   <CardContent>
                     <Typography variant="body2" color="text.secondary">
                       {value.description}
@@ -194,7 +196,6 @@ export const Feed = () => {
                           </Button>
                         </Box>
                       )}
-
                       <AddTrickModal
                         open={modalOpen}
                         setOpen={setModalOpen}
@@ -202,6 +203,22 @@ export const Feed = () => {
                       ></AddTrickModal>
                     </>
                   )}
+                  {userType === "brand" || "admin" ? (
+                    <>
+                      {" "}
+                      <IconButton aria-label="add to favorites"></IconButton>
+                      <Typography
+                        sx={{
+                          marginLeft: "1.3rem",
+                          fontSize: "14px",
+                          color: "#8b8b8b",
+                          marginBottom: "1rem",
+                        }}
+                      >
+                        {value.counts} Likes
+                      </Typography>
+                    </>
+                  ) : null}
                   <CommentField commentsValue={value.comments} />
                 </Card>
               );
