@@ -1,11 +1,8 @@
 import React from "react";
 import axios from "axios";
-import { adminContext } from "../Contexts/Admin";
 import useGetChallenges from "./useGetChallenges";
 
 const useAddComments = () => {
-  const { setChallenges, challenges } = React.useContext(adminContext);
-  const { setComments, comments } = React.useContext(adminContext);
   const { GetChallenges } = useGetChallenges();
   const PostComments = (
     challengeId: string | undefined,

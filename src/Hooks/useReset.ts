@@ -1,66 +1,79 @@
+import React from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
-const useAdminSignup = (userType: any) => {
+const useReset = (userType: any, token: any) => {
+  console.log("testing..........coming", userType);
   let navigate = useNavigate();
+
+  var url_string = window.location.href;
+  console.log(url_string);
+  var newurl = new URL(url_string);
+  var c = newurl.searchParams.get("reset_password_token");
+  console.log("coming------------------", c);
   let url =
     userType === "admin"
-      ? "http://192.168.99.104:3000/api/admins"
+      ? `http://192.168.99.104:3000/api/admins/password`
       : userType === "brand"
-      ? "http://192.168.99.104:3000/api/brands"
+      ? `http://192.168.99.104:3000/api/brands/password`
       : userType === "customer"
-      ? "http://192.168.99.104:3000/api/customers"
+      ? `http://192.168.99.104:3000/api/customers/password`
       : "/404_Not_Found";
-  const adminSignup = (
-    name: string,
-    email: string,
+  const ResetPwd = (
     password: string,
-    location: string,
-    setLoading: (Params: any) => any
+    confirmPassword: string,
+    token: string,
+    setLoading: (Params: any) => any,
+    setOpen: (Params: any) => any,
+    open: boolean
   ) => {
+    console.log("open value before api callll", open);
     if (userType === "admin") {
       axios
-        .post(url, {
+        .patch(url, {
           admin: {
-            name: name,
-            email: email,
             password: password,
+            reset_password_token: c,
           },
         })
         .then(function (response: any) {
-          console.log(response.data);
+          console.log("response in here", response.data);
           window.localStorage.setItem(
             "token",
             JSON.stringify(response.data.admin.token)
           );
 
-          navigate("/feed/admin");
+          navigate("/feed");
           setLoading(false);
+          setOpen(true);
+          console.log("open value after---------------- api callll", open);
         })
 
         .catch(function (error: string) {
           console.log(error);
           setLoading(false);
+          setOpen(true);
         });
     }
     if (userType === "brand") {
       axios
-        .post(url, {
+        .patch(url, {
           brand: {
-            name: name,
-            email: email,
             password: password,
-            location: location,
+
+            reset_password_token: c,
           },
         })
         .then(function (response: any) {
-          console.log(response.data);
+          console.log("is coming-------------------------", response.data);
           window.localStorage.setItem(
             "token",
             JSON.stringify(response.data.brand.token)
           );
-          navigate("/feed/brand");
+          navigate("/feed");
           setLoading(false);
+          setOpen(true);
+          console.log("this is ----------------------------", response);
         })
         .catch(function (error: string) {
           console.log(error);
@@ -70,11 +83,12 @@ const useAdminSignup = (userType: any) => {
 
     if (userType === "customer") {
       axios
-        .post(url, {
+        .patch(url, {
           customer: {
-            name: name,
-            email: email,
+            // email: email,
             password: password,
+
+            reset_password_token: c,
           },
         })
         .then(function (response: any) {
@@ -83,18 +97,21 @@ const useAdminSignup = (userType: any) => {
             "token",
             JSON.stringify(response.data.customer.token)
           );
-          navigate("/feed/customer");
+          navigate("/feed");
           setLoading(false);
+          setOpen(true);
+          console.log("this is ----------------------------", response);
         })
         .catch(function (error: string) {
           console.log(error);
           setLoading(false);
+          setOpen(true);
         });
     }
   };
 
   return {
-    adminSignup,
+    ResetPwd,
   };
 };
-export default useAdminSignup;
+export default useReset;

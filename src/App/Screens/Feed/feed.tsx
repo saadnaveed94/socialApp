@@ -19,8 +19,9 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ShareIcon from "@mui/icons-material/Share";
-import PrimarySearchAppBar from "../../../Components/Appbar";
 import FlashOnIcon from "@mui/icons-material/FlashOn";
+
+import PrimarySearchAppBar from "../../../Components/Appbar";
 import AddChallengeModal from "./AddChallengeModal";
 import AddTrickModal from "./AddTrickModal";
 import useGetChallenges from "../../../Hooks/useGetChallenges";
@@ -64,7 +65,6 @@ export const Feed = () => {
   };
   const handleLikes = (challengeId: any | undefined) => {
     PostLikes(challengeId);
-    // setNewLikes(e.target.value);
   };
 
   const { DeleteChallenge } = useDeleteChallenge();
@@ -135,14 +135,12 @@ export const Feed = () => {
                       <CardActions sx={{ justifyContent: "space-evenly" }}>
                         <IconButton aria-label="add to favorites">
                           <FavoriteIcon
-                            onClick={(e:any) => {
+                            onClick={(e: any) => {
                               handleLikes(value.id);
                             }}
                           />
                         </IconButton>
-                        <Typography
-                          sx={{ marginLeft: "-9.2rem", marginTop: "3rem" }}
-                        >
+                        <Typography sx={{ marginLeft: "-7.2rem" }}>
                           {value.counts}
                         </Typography>
 

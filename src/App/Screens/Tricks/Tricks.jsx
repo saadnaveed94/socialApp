@@ -2,25 +2,27 @@ import * as React from "react";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
-import { Container, Box, Typography } from "@mui/material";
-
+import {  Container, Box, Typography } from "@mui/material";
+import ChallengeCard from "./ChallengeCard";
 const styleContainer = {
   display: "flex",
-  justifyContent: "center",
+
   mt: 2,
 };
 
 export const Tricks = () => {
   return (
     <Container sx={styleContainer}>
-      <Box>
-        <Typography
+     
+      <Box sx={{display: "flex", flexDirection: "row"}}>
+      <ChallengeCard></ChallengeCard>
+        {/* <Typography
           onClick={console.log("clicked")}
           variant="h5"
           sx={styleContainer}
         >
           Challenge Name
-        </Typography>
+        </Typography> */}
         <ImageList sx={{ width: 500, height: 450 }}>
           {itemData.map((item) => (
             <ImageListItem key={item.img}>
@@ -39,6 +41,7 @@ export const Tricks = () => {
           ))}
         </ImageList>
       </Box>
+
     </Container>
   );
 };

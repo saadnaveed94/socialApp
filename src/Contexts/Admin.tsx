@@ -6,7 +6,6 @@ export const adminContext = createContext<any>(null);
 
 export const AdminProvider = ({ children }: any) => {
   const [adminData, setAdminData] = React.useState<adminDataType>([]);
-
   const [comments, setComments] = React.useState<adminDataType>([]);
   const [challenges, setChallenges] = React.useState<any>([]);
   return ( 

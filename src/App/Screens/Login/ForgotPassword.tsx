@@ -5,9 +5,10 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import * as yup from "yup";
-import { Navigate, useParams } from "react-router-dom";
-import CircularProgress from "@mui/material/CircularProgress";
-import useForget from "../../../Hooks/useForget";
+import { Navigate, redirect, useParams, Link } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
+import useForget from '../../../Hooks/useForget';
+import CustomizedSnackbars from '../../../Components/Toast';
 
 const validationSchema = yup.object({
   email: yup
@@ -16,10 +17,13 @@ const validationSchema = yup.object({
     .required("Email is required"),
 });
 
-const ForgotPassword = () => {
-  let { pwdType } = useParams();
-  console.log("pwdType in forget password  email", pwdType);
-  const { Forget } = useForget(pwdType);
+
+const ForgotPassword = (props: any) => {
+  const [open, setOpen] = React.useState(false);
+
+  let { userType } = useParams();
+  console.log("userType in forget password  email", userType);
+  const { Forget } = useForget(userType);
   const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
@@ -29,15 +33,15 @@ const ForgotPassword = () => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       setLoading(true);
-      Forget(values.email, setLoading);
+      Forget(values.email, setLoading, setOpen);
     },
   });
-  if (
-    pwdType !== "brandpassword" &&
-    pwdType !== "customerpassword" &&
-    pwdType !== "adminpassword"
-  ) {
-    return <Navigate to="/404_Not_Found" />;
+  if (userType !== 'brand' && userType !== 'customer' && userType !== 'admin') {
+    return < Navigate to="/404_Not_Found" />
+  }
+
+  const handleButtonClick = () => {
+    setOpen(true);
   }
 
   return (
@@ -55,13 +59,12 @@ const ForgotPassword = () => {
               }}
             >
               <form onSubmit={formik.handleSubmit}>
-                {pwdType === "adminpassword" ? (
-                  <h1 className="loginheading">Admin Password Change</h1>
-                ) : pwdType === "brandpassword" ? (
-                  <h1 className="loginheading">Brand Password Change</h1>
-                ) : (
-                  <h1 className="loginheading">Customer Password Change</h1>
-                )}
+                {userType === "admin" ? (
+                  <h1 className='loginheading'>Admin Password Change</h1>
+                ) : userType === "brand" ? (
+                  <h1 className='loginheading'>Brand Password Change</h1>
+                ) : <h1 className='loginheading'>Customer Password Change</h1>
+                }
                 <TextField
                   fullWidth
                   id="email"
@@ -87,18 +90,35 @@ const ForgotPassword = () => {
                   </Box>
                 )}
 
-                <Button
-                  variant="contained"
-                  className="loginButton"
-                  type="submit"
-                  sx={{
-                    margin: "8px",
-                    color: "white",
-                  }}
-                >
+                <Button variant='contained' className='loginButton' type="submit" sx={{
+                  margin: '8px', color: 'white', backgroundColor: '#0e27c9ce;'
+                }} >
                   Send Reset Link
                 </Button>
+
+                {userType === "admin" ? (
+                  <Link id="span2" to="login/admin">
+                    LOGIN AS ADMIN!
+                  </Link>
+
+                ) : userType === "brand" ? (
+                  <Link id="span2" to="login/brand">
+                    LOGIN AS BRAND!
+                  </Link>
+                ) : <Link id="span2" to="login/customer">
+                  LOGIN AS CUSTOMER!
+                </Link>
+                }
+
+
+                <CustomizedSnackbars
+                  open={open}
+                  setOpen={setOpen}
+                  text={"Reset link has been set to your email"}
+                ></CustomizedSnackbars>
                 <br></br>
+
+
 
                 {/* <span id="span">LOGIN</span> */}
                 <br></br>

@@ -21,6 +21,7 @@ const useAddLikes = () => {
       .then(function (response: any) {
         console.log(response.data);
         GetChallenges();
+  
       })
       .catch(function (error: any) {
         console.log("front end ");
