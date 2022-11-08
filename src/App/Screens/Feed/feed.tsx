@@ -24,26 +24,45 @@ import AddTrickModal from "./AddTrickModal";
 import useGetChallenges from "../../../Hooks/useGetChallenges";
 import { adminContext } from "../../../Contexts/Admin";
 import moment from "moment/moment";
+import useAddComments from "../../../Hooks/useAddComments";
+import CommentField from "../../../Components/CommentField";
+import useDeleteChallenge from "../../../Hooks/useDeleteChallenge";
+import useAddLikes from "../../../Hooks/useAddLikes";
 import AlertDialog from "../../../Components/AlertDialog";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-export const Feed = () => {
+export const Feed = (props: any) => {
+  const [newComment, setNewComment] = React.useState<string>("");
+  const { PostComments } = useAddComments();
+  const { PostLikes } = useAddLikes();
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [challengeId, setChallengeId] = React.useState<string>("");
 
-  const { challenges } = React.useContext(adminContext);
+  const { challenges, comments } = React.useContext(adminContext);
+
   const { GetChallenges } = useGetChallenges();
   React.useEffect(() => {
     GetChallenges();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   let navigate = useNavigate();
-  let { userType } = useParams();
+  const { userType } = useParams();
   if (userType !== "customer" && userType !== "admin" && userType !== "brand") {
     navigate("/404_Not_Found");
   }
+
+  const handleAddComment = () => {
+    setNewComment("");
+  };
+
+  const handleComment = (challengeId: any | undefined) => {
+    PostComments(challengeId, newComment);
+  };
+  const handleLikes = (challengeId: any | undefined) => {
+    PostLikes(challengeId);
+  };
+
   const userId = Number(window.localStorage.getItem("userId"));
 
   return (
@@ -71,100 +90,141 @@ export const Feed = () => {
           flexDirection: "column",
         }}
       >
-        <Container sx={{ width: "40%", margin: "auto", marginTop: "100px" }}>
-          {challenges.map((value: any, key: number) => {
-            return (
-              <Card
-                key={value.id}
-                sx={{ borderRadius: "12px", mb: 3, minHeight: "500px" }}
-              >
-                <CardHeader
-                  avatar={
-                    <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
-                      {value.brand_id}
-                    </Avatar>
-                  }
-                  action={
-                    userId === value.brand_id && (
-                      <IconButton
-                        aria-label="settings"
-                        onClick={() => {
-                          setDialogOpen(true);
-                          setChallengeId(value.id);
-                        }}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    )
-                  }
-                  title={value.title}
-                  subheader={moment(value.created_at).format("ll")}
-                />
-                <CardActionArea
-                  onClick={() => {
-                    navigate(`/feed/brand/tricks/?ChallengeId=${value.id}`);
-                  }}
+        {challenges && (
+          <Container sx={{ width: "40%", margin: "auto", marginTop: "100px" }}>
+            {challenges.map((value: any, key: string | undefined) => {
+              return (
+                <Card
+                  key={value.id}
+                  sx={{ borderRadius: "12px", mb: 3, minHeight: "auto" }}
                 >
-                  <CardMedia
-                    sx={{ maxHeight: "300px" }}
-                    component="img"
-                    image={`http://192.168.99.104:3000${value?.images[0]}`}
-                  />
-                </CardActionArea>
-                <CardContent>
-                  <Typography variant="body2" color="text.secondary">
-                    {value.description}
-                  </Typography>
-                </CardContent>
-
-                {userType === "customer" && (
-                  <>
-                    <CardActions sx={{ justifyContent: "space-evenly" }}>
-                      <Tooltip title="Like">
-                        <IconButton aria-label="add to favorites">
-                          <FavoriteIcon />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Add a Trick">
+                  <CardHeader
+                    avatar={
+                      <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
+                        {value.brand_id}
+                      </Avatar>
+                    }
+                    action={
+                      userId === value.brand_id && (
                         <IconButton
-                          aria-label="add a trick"
-                          onClick={(event: React.MouseEvent<HTMLElement>) => {
-                            setModalOpen(true);
+                          aria-label="settings"
+                          onClick={() => {
+                            setDialogOpen(true);
                             setChallengeId(value.id);
                           }}
                         >
-                          <FlashOnIcon />
+                          <DeleteIcon />
                         </IconButton>
-                      </Tooltip>
-                    </CardActions>
-                    <Box sx={{ display: "flex", flexDirection: "row", p: 1 }}>
-                      <Textarea
+                      )
+                    }
+                    title={value.title}
+                    subheader={moment(value.created_at).format("ll")}
+                  />
+                  <CardActionArea
+                    onClick={() => {
+                      navigate(`/feed/brand/tricks/?ChallengeId=${value.id}`);
+                    }}
+                  >
+                    <CardMedia
+                      sx={{ maxHeight: "300px" }}
+                      component="img"
+                      image={`http://192.168.99.104:3000${value?.images[0]}`}
+                    />
+                  </CardActionArea>
+                  <CardContent>
+                    <Typography variant="body2" color="text.secondary">
+                      {value.description}
+                    </Typography>
+                  </CardContent>
+
+                  {userType === "customer" && (
+                    <>
+                      <CardActions sx={{ justifyContent: "space-evenly" }}>
+                        <IconButton aria-label="add to favorites">
+                          <FavoriteIcon
+                            onClick={(e: any) => {
+                              handleLikes(value.id);
+                            }}
+                          />
+                        </IconButton>
+                        <Typography sx={{ marginLeft: "-7.2rem" }}>
+                          {value.counts}
+                        </Typography>
+
+                        <Tooltip title="Add a Trick">
+                          <IconButton
+                            aria-label="add a trick"
+                            onClick={(event: React.MouseEvent<HTMLElement>) => {
+                              setModalOpen(true);
+                              setChallengeId(value.id);
+                            }}
+                          >
+                            <FlashOnIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </CardActions>
+                      {userType === "customer" && (
+                        <Box
+                          sx={{ display: "flex", flexDirection: "row", p: 1 }}
+                        >
+                          <Textarea
+                            sx={{
+                              width: "90%",
+                              borderRadius: "0px",
+                              borderColor: "transparent",
+                              p: 1,
+                              "&.JoyTextarea-focused": {
+                                focusedHighlight: "black !important",
+                              },
+                            }}
+                            placeholder="Add a comment…"
+                            defaultValue=""
+                            maxRows={4}
+                            onChange={(event) =>
+                              setNewComment(event.target.value)
+                            }
+                            value={newComment}
+                          />
+                          <Button
+                            sx={{ textTransform: "none" }}
+                            onClick={() => {
+                              handleComment(value.id);
+                              handleAddComment();
+                            }}
+                          >
+                            Post
+                          </Button>
+                        </Box>
+                      )}
+                      <AddTrickModal
+                        open={modalOpen}
+                        setOpen={setModalOpen}
+                        challengeId={challengeId}
+                      ></AddTrickModal>
+                    </>
+                  )}
+                  {userType === "brand" || "admin" ? (
+                    <>
+                      {" "}
+                      <IconButton aria-label="add to favorites"></IconButton>
+                      <Typography
                         sx={{
-                          width: "90%",
-                          borderRadius: "0px",
-                          borderColor: "transparent",
-                          p: 1,
-                          "&.JoyTextarea-focused": {
-                            focusedHighlight: "black !important",
-                          },
+                          marginLeft: "1.3rem",
+                          fontSize: "14px",
+                          color: "#8b8b8b",
+                          marginBottom: "1rem",
                         }}
-                        placeholder="Add a comment…"
-                        defaultValue=""
-                        maxRows={4}
-                      />
-                      <Button sx={{ textTransform: "none" }}>Post</Button>
-                    </Box>
-                    <AddTrickModal
-                      open={modalOpen}
-                      setOpen={setModalOpen}
-                      challengeId={challengeId}
-                    ></AddTrickModal>
-                  </>
-                )}
-              </Card>
-            );
-          })}
-        </Container>
+                      >
+                        {value.counts} Likes
+                      </Typography>
+                    </>
+                  ) : null}
+                  <CommentField commentsValue={value.comments} />
+                </Card>
+              );
+            })}
+          </Container>
+        )}
       </Box>
     </>
   );

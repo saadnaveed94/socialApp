@@ -5,12 +5,13 @@ import ImageListItemBar from "@mui/material/ImageListItemBar";
 import { adminContext } from "../../../Contexts/Admin";
 import ChallengeCard from "./ChallengeCard";
 import { Container, Box } from "@mui/material";
+
 const styleContainer = {
   display: "flex",
   mt: 2,
 };
 
-export const Tricks = () => {
+export const Tricks = (props: any) => {
   const [previewImage, setPreviewImage] = React.useState<string>("");
   const { challenges } = React.useContext(adminContext);
 
@@ -46,6 +47,7 @@ export const Tricks = () => {
           </ImageListItem>
         </ImageList>
       </Box>
+     
     </Container>
   );
 };

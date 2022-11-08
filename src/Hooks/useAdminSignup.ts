@@ -34,7 +34,7 @@ const useAdminSignup = (userType: any) => {
             JSON.stringify(response.data.admin.token)
           );
 
-          navigate(`/feed/admin`);
+          navigate("/feed/admin");
           setLoading(false);
         })
 

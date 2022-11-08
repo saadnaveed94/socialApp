@@ -12,12 +12,11 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 
-
-import { useParams } from 'react-router-dom';
-import CircularProgress from '@mui/material/CircularProgress';
+import { useParams } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
 import CustomizedSnackbars from "../../../Components/Toast";
-import useReset from '../../../Hooks/useReset';
-import { Typography } from '@mui/joy';
+import useReset from "../../../Hooks/useReset";
+import { Typography } from "@mui/joy";
 const validationSchema = yup.object({
   // email: yup
   //   .string()
@@ -26,20 +25,16 @@ const validationSchema = yup.object({
   password: yup
     .string()
     .required("Please enter your new password")
-    .min(6, 'Password should be of minimum 6 characters length')
+    .min(6, "Password should be of minimum 6 characters length")
     .oneOf([yup.ref("password")], "Passwords do not match"), // yup.ref use horaha hai password match karwanay k liye
   confirmPassword: yup
     .string()
     .required("Confirm Password")
-    .min(6, 'Password should be of minimum 6 characters length')
+    .min(6, "Password should be of minimum 6 characters length")
     .oneOf([yup.ref("password")], "Passwords do not match"), // yup.ref use horaha hai password match karwanay k liye
-
 });
 
-
-
 const ResetPage = (props: any) => {
-
   const [open, setOpen] = React.useState(false);
 
   let { userType, token } = useParams();
@@ -47,10 +42,9 @@ const ResetPage = (props: any) => {
   const { ResetPwd } = useReset(userType, token);
   const [loading, setLoading] = useState(false);
 
-
-
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false);
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -59,21 +53,23 @@ const ResetPage = (props: any) => {
 
   const formik = useFormik({
     initialValues: {
-
       password: "",
       confirmPassword: "",
       usertoken: token || "",
-
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
       setLoading(true);
-      ResetPwd(values.password, values.confirmPassword, values.usertoken, setLoading, setOpen, open);
-
-    }
-
-
-  })
+      ResetPwd(
+        values.password,
+        values.confirmPassword,
+        values.usertoken,
+        setLoading,
+        setOpen,
+        open
+      );
+    },
+  });
 
   return (
     <Box className="login">
@@ -82,36 +78,38 @@ const ResetPage = (props: any) => {
           <h3 className="loginText">Social Media App</h3>
           <Box className="loginDesc">Connect with each other!</Box>
         </Box>
-        <Box className='loginRight'>
-          <Box className='loginBox'>
-
-
-
-            <Box >
-
+        <Box className="loginRight">
+          <Box className="loginBox">
+            <Box>
               <form onSubmit={formik.handleSubmit}>
-
-                <Box >
-                  <FormControl sx={{ m: 1, width: "50ch" }} variant="outlined" />
+                <Box>
+                  <FormControl
+                    sx={{ m: 1, width: "50ch" }}
+                    variant="outlined"
+                  />
                   <InputLabel htmlFor="outlined-adornment-password">
                     Password
                   </InputLabel>
                   <OutlinedInput
-                    sx={{ width: '440px' }}
+                    sx={{ width: "440px" }}
                     id="password"
                     name="password"
                     label="Password"
                     type={showPassword ? "text" : "password"}
                     value={formik.values.password}
                     onChange={formik.handleChange}
-                    error={formik.touched.password && Boolean(formik.errors.password)}
+                    error={
+                      formik.touched.password && Boolean(formik.errors.password)
+                    }
                     // helperText={formik.touched.password && formik.errors.password}
                     onBlur={formik.handleBlur}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
                           aria-label="toggle password visibility"
-                          onClick={() => { setShowPassword(!showPassword) }}
+                          onClick={() => {
+                            setShowPassword(!showPassword);
+                          }}
                           onMouseDown={handleMouseDownPassword}
                           edge="end"
                         >
@@ -119,56 +117,77 @@ const ResetPage = (props: any) => {
                         </IconButton>
                       </InputAdornment>
                     }
-
                   />
-                  <Typography sx={{
-                    color: "#d32f2f",
-                    fontWeight: '500',
-                    fontSize: '0.75rem'
-                  }}>{formik.touched.password && formik.errors.password} </Typography>
+                  <Typography
+                    sx={{
+                      color: "#d32f2f",
+                      fontWeight: "500",
+                      fontSize: "0.75rem",
+                    }}
+                  >
+                    {formik.touched.password && formik.errors.password}{" "}
+                  </Typography>
                 </Box>
                 <div>
-                  <Box sx={{
-                    "& .MuiTextField-root": { m: 1, width: "100ch" }, display: "flex", flexWrap: "wrap"
-                  }}>
+                  <Box
+                    sx={{
+                      "& .MuiTextField-root": { m: 1, width: "100ch" },
+                      display: "flex",
+                      flexWrap: "wrap",
+                    }}
+                  >
                     <div>
-                      <FormControl sx={{ m: 1, width: "50ch" }} variant="outlined" />
+                      <FormControl
+                        sx={{ m: 1, width: "50ch" }}
+                        variant="outlined"
+                      />
                       <InputLabel htmlFor="outlined-adornment-password">
                         Confirm Password
                       </InputLabel>
                       <OutlinedInput
-                        sx={{ width: '440px' }}
+                        sx={{ width: "440px" }}
                         id="confirmPassword"
                         name="confirmPassword"
                         type={showConfirmPassword ? "text" : "password"}
                         value={formik.values.confirmPassword}
                         onChange={formik.handleChange}
-                        error={formik.touched.password && Boolean(formik.errors.confirmPassword)}
+                        error={
+                          formik.touched.password &&
+                          Boolean(formik.errors.confirmPassword)
+                        }
                         // helperText={formik.touched.password && formik.errors.password}
                         onBlur={formik.handleBlur}
                         endAdornment={
                           <InputAdornment position="end">
                             <IconButton
                               aria-label="toggle password visibility"
-                              onClick={() => { setShowConfirmPassword(!showConfirmPassword) }}
+                              onClick={() => {
+                                setShowConfirmPassword(!showConfirmPassword);
+                              }}
                               onMouseDown={handleMouseDownPassword}
                               edge="end"
                             >
-                              {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                              {showConfirmPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
                             </IconButton>
                           </InputAdornment>
                         }
-
                       />
-                      <Typography sx={{
-                        color: "#d32f2f",
-                        fontWeight: '500',
-                        fontSize: '0.75rem'
-                      }}>{formik.touched.password && formik.errors.password} </Typography>
+                      <Typography
+                        sx={{
+                          color: "#d32f2f",
+                          fontWeight: "500",
+                          fontSize: "0.75rem",
+                        }}
+                      >
+                        {formik.touched.password && formik.errors.password}{" "}
+                      </Typography>
                     </div>
                   </Box>
                 </div>
-
 
                 {/* <OutlinedInput
                   id="confirmPassword"
@@ -180,7 +199,6 @@ const ResetPage = (props: any) => {
                   error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
                   onBlur={formik.handleBlur}
                 /> */}
-
 
                 {loading && (
                   <Box
@@ -195,9 +213,14 @@ const ResetPage = (props: any) => {
                   </Box>
                 )}
 
-                <Button variant='contained' className='loginButton' type="submit" sx={{
-                  margin: '8px', color: 'white'
-                }}
+                <Button
+                  variant="contained"
+                  className="loginButton"
+                  type="submit"
+                  sx={{
+                    margin: "8px",
+                    color: "white",
+                  }}
                 >
                   Change Password
                 </Button>
@@ -212,12 +235,12 @@ const ResetPage = (props: any) => {
                 <br></br>
 
                 <br></br>
-              </form >
-            </Box >
-          </Box >
-        </Box >
-      </Box >
-    </Box >
+              </form>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

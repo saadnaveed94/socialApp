@@ -1,56 +1,88 @@
-import * as React from "react";
-import InputUnstyled from "@mui/base/InputUnstyled";
-import { styled } from "@mui/system";
+import React, { useState } from "react";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Box from "@mui/material/Box";
 
-const grey = {
-  50: "#f6f8fa",
-  100: "#eaeef2",
-  200: "#d0d7de",
-  300: "#afb8c1",
-  400: "#8c959f",
-  500: "#6e7781",
-  600: "#57606a",
-  700: "#424a53",
-  800: "#32383f",
-  900: "#24292f",
-};
-
-const StyledInputElement = styled("input")(
-  ({ theme }) => `
-  width: 320px;
-  font-family: IBM Plex Sans, sans-serif;
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.5;
-  padding: 12px;
-  border-radius: 0px;
-  color: '#24292f';
-  
-  border: 1px solid #24292f;
-  box-shadow: 0px 4px 30px ${
-    theme.palette.mode === "dark" ? grey[900] : grey[200]
+const CommentField = (props: any) => {
+  const [itemsToShow, setItemsToShow] = useState(5);
+  const commentsField = props.commentsValue;
+  const showmore = () => {
+    setItemsToShow(commentsField.length);
+  };
+  const showless = () => {
+    setItemsToShow(5);
   };
 
-  &:hover {
-    border-color: '#24292f';
-  }
-
-  &:focus {
-    border-color: '#24292f';
-    outline: 0px solid ${"#24292f"};
-  }
-`
-);
-
-const CustomInput = React.forwardRef(function CustomInput(
-  props: React.InputHTMLAttributes<HTMLInputElement>,
-  ref: React.ForwardedRef<HTMLDivElement>
-) {
   return (
-    <InputUnstyled slots={{ input: StyledInputElement }} {...props} ref={ref} />
-  );
-});
+    <div>
+      <Accordion>
+        <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
+          <button
+            style={{
+              border: "none",
+              backgroundColor: "white",
+              color: "#8b8b8b",
+              cursor: "pointer",
+            }}
+          >
+            View comments
+          </button>
+        </AccordionSummary>
+        <AccordionDetails>
+          {commentsField &&
+            commentsField
+              .slice(0, itemsToShow)
+              .map((value: any, key: string) => {
+                return (
+                  <Box
+                    key={value.id}
+                    sx={{
+                      lineHeight: "1rem",
+                      paddingLeft: "10px",
+                      marginBottom: "20px",
+                      fontSize: "13px",
+                      paddingBottom: "11px",
+                    }}
+                  >
+                    {value?.description}
+                  </Box>
+                );
+              })}
 
-export default function UnstyledInputIntroduction() {
-  return <CustomInput aria-label="Demo input" placeholder="Type something…" />;
-}
+          {itemsToShow === 5 ? (
+            <Box>
+              <button
+                style={{
+                  marginTop: "1rem",
+                  border: "none",
+                  backgroundColor: "white",
+                  color: "#8b8b8b",
+                  cursor: "pointer",
+                }}
+                onClick={showmore}
+              >
+                View more comments
+              </button>
+            </Box>
+          ) : (
+            <button
+              style={{
+                marginTop: "1rem",
+                border: "none",
+                backgroundColor: "white",
+                color: "#8b8b8b",
+                cursor: "pointer",
+              }}
+              onClick={showless}
+            >
+              View less comments
+            </button>
+          )}
+        </AccordionDetails>
+      </Accordion>
+    </div>
+  );
+};
+
+export default CommentField;

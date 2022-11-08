@@ -2,7 +2,7 @@ import React from "react";
 import "./Signup.css";
 import { useFormik } from "formik";
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
+import TextField from '@mui/material/TextField';
 import * as yup from "yup";
 import useAdminSignup from "../../../Hooks/useAdminSignup";
 import { Link, Navigate } from "react-router-dom";
@@ -13,7 +13,7 @@ import Location from "./Location";
 
 const validationSchema = yup.object({
   name: yup.string().required("Username is required"),
-  email: yup
+  email: yup 
     .string()
     .email("Enter a valid email")
     .required("Email is required"),
@@ -24,12 +24,12 @@ const validationSchema = yup.object({
 });
 
 const Signup = (props: any) => {
-  let { userType } = useParams();
+  const { userType } = useParams();
   const [loading, setLoading] = useState(false);
   const { adminSignup } = useAdminSignup(userType);
   const formik = useFormik({
     initialValues: {
-      name: "",
+      name: "", 
       email: "",
       password: "",
       location: "",
@@ -44,7 +44,7 @@ const Signup = (props: any) => {
         setLoading
       );
       setLoading(true);
-    },
+    }, 
   });
 
   if (userType !== "customer" && userType !== "admin" && userType !== "brand") {
