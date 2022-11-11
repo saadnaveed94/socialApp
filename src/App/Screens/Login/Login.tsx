@@ -46,8 +46,6 @@ const Login = () => {
     return <Navigate to="/404_Not_Found" />;
   }
 
-
-
   return (
     <Box className="login">
       <Box className="loginWrapper">
@@ -111,9 +109,11 @@ const Login = () => {
                   variant="contained"
                   className="loginButton"
                   type="submit"
+
                   sx={{
                     margin: "8px",
                     color: "white",
+                    backgroundColor: "#303030",
                   }}
                 >
                   LOGIN
@@ -123,7 +123,7 @@ const Login = () => {
                 <span id="span">Don't have an account?</span>
                 <br></br>
                 {userType === "admin" ? (
-                  <Link id="span2" to="/admin">
+                  <Link id="span2" to="/admin" >
                     SIGNUP AS ADMIN!
                   </Link>
                 ) : userType === "brand" ? (
@@ -137,21 +137,20 @@ const Login = () => {
                 )}
                 <br></br>
                 {userType === "admin" ? (
-                  <Link id="span2" to='/admin/forgotpassword'>
+                  <Link id="span2" to="/admin/forgotpassword">
                     Forgot Password?
                   </Link>
                 ) : userType === "brand" ? (
-                  <Link id="span2" to='/brand/forgotpassword'>
+                  <Link id="span2" to="/brand/forgotpassword">
                     Forgot Password?
                   </Link>
-                ) : <Link id="span2" to='/customer/forgotpassword'>
-                  Forgot Password?
-                </Link>
-                }
+                ) : (
+                  <Link id="span2" to="/customer/forgotpassword">
+                    Forgot Password?
+                  </Link>
+                )}
                 <br></br>
-                <CustomizedSnackbars setOpen={open}  >
-
-                </CustomizedSnackbars>
+                <CustomizedSnackbars setOpen={open}></CustomizedSnackbars>
               </form>
             </Box>
           </Box>

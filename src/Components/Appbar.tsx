@@ -6,6 +6,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
+import { useNavigate } from "react-router";
 import {
   Button,
   Menu,
@@ -61,6 +62,7 @@ const StyledInputBase = styled(InputBase)(({ theme }: any) => ({
 }));
 
 export default function PrimarySearchAppBar(props: any) {
+  let navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -78,6 +80,10 @@ export default function PrimarySearchAppBar(props: any) {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+  };
+  const handleLogout = () => {
+    window.localStorage.removeItem("token");
+    navigate("/customer/login");
   };
 
   const handleMobileMenuOpen = (event: any) => {
@@ -103,6 +109,7 @@ export default function PrimarySearchAppBar(props: any) {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>
   );
 
@@ -161,8 +168,8 @@ export default function PrimarySearchAppBar(props: any) {
   let { userType } = useParams();
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" sx={{ bgcolor: "#424242" }}>
-        <Toolbar>
+      <AppBar position="fixed">
+        <Toolbar sx={{ bgcolor: "#0e27c9ce;" }}>
           <IconButton
             size="large"
             edge="start"
@@ -188,7 +195,7 @@ export default function PrimarySearchAppBar(props: any) {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search…"
+              placeholder="new.."
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
